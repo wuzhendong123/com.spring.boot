@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="white-bg">
+<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+    <form class="form-horizontal m" id="form-add" th:object="${queryFunction}">
+        <input name="queryCode"   type="hidden" th:value="*{code}"   />
+
+        <!--<fieldset class="layui-elem-field layui-field-title" style="margin-top: 10px;">-->
+            <!--<legend>添加</legend>-->
+        <!--</fieldset>-->
+
+        <div class="layui-tab layui-tab-card">
+            <ul class="layui-tab-title">
+                <li th:class="${loopStatus.index==0}?'layui-this'"     th:each="paramQuery ,loopStatus: ${paramQuerys}" th:value="${paramQuery.key}" th:text="${paramQuery.key}" >网站设置</li>
+
+            </ul>
+            <div class="layui-tab-content layui-show" >
+                <div th:class="${loopStatus.index==0}?'layui-tab-item layui-show':'layui-tab-item'"  th:id="'div_'+${loopStatus.index}" th:each="paramQuery ,loopStatus: ${paramQuerys}">
+                    <div class="form-group" >
+                        <label class="col-sm-3 control-label " th:value="${paramQuery.key}" th:text="${paramQuery.key}">参数key</label>
+                        <div class="col-sm-8">
+                            <div class="input-group">
+                                <input class="form-control" type="text" th:name="'funParam['+${loopStatus.index}+'].paramKey'" th:value="${paramQuery.key}" readonly>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label ">状态：</label>
+                        <div class="col-sm-8">
+                            <select  class="form-control"  th:name="'funParam['+${loopStatus.index}+'].status'">
+                                <option th:each="dict : ${@dict.getType('sys_status_type')}"
+                                        th:value="${dict.dictValue}"
+                                        th:text="${dict.dictLabel}" >状态</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label ">组件类型：</label>
+                        <div class="col-sm-8">
+                            <select  class="form-control" th:name="'funParam['+${loopStatus.index}+'].paramHtmlCode'" th:onchange="'paThSelect('+${loopStatus.index}+',this,\'funParam['+${loopStatus.index}+']\')'">
+                                <option th:each="paTm : ${@paHtTmService.findAll()}"
+                                        th:value="${paTm.code}"
+                                        th:text="${paTm.name}" >组件类型</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group" >
+                        <label class="col-sm-3 control-label " >参数表达式:</label>
+                        <div class="col-sm-8">
+                            <div class="input-group">
+                                <input class="form-control" type="text"  th:name="'funParam['+${loopStatus.index}+'].paramExp'">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+
+
+    </form>
+</div>
+<div th:include="include::footer"></div>
+<script th:inline="javascript">
+    var prefix = ctx + "funParamHtmlRef";
+    var paHtTms=[[${@paHtTmService.findAll()}]];
+    layui.use('element', function(){
+        var element = layui.element;
+
+    });
+    function paThSelect(index,obj,namePre){
+        var val=$(obj).val();
+        var pa=paHtTmsEach(paHtTms,val);
+        $("#div_"+index).find(".html_append").remove();
+        if(pa!=null){
+            var htmlPas=pa.htmlParam;
+            $.each(JSON.parse(htmlPas), function(i, htmlPa) {
+                var div=$('<div class="form-group html_append" ></div>');
+                var rowKey='<label class="col-sm-3 control-label"><input class="form-control" type="hidden" name="'+namePre+'.paramMapQuery['+i+'].key"  value="'+htmlPa.key+'" >'+htmlPa.key+'</label>';
+                var rowValue='<div class="col-sm-4"> <input class="form-control" type="text" name="'+namePre+'.paramMapQuery['+i+'].value"  > </div>';
+                div.append(rowKey).append(rowValue);
+                $("#div_"+index).append(div);
+            });
+
+        }
+
+    }
+    function paHtTmsEach(paHtTms,val){
+        var pa;
+        $.each(paHtTms, function(index, paHtTm) {
+            if (paHtTm.code == val) {
+                pa=paHtTm;
+                return false;
+            }
+        });
+        return pa;
+    }
+
+    function submitHandler(){
+        $.operate.save(prefix + "/addArray", $('#form-add').serialize());
+    }
+
+</script>
+</body>
+</html>

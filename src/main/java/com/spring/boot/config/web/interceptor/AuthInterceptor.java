@@ -3,12 +3,12 @@ package com.spring.boot.config.web.interceptor;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.spring.boot.entity.Operator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.servlet.DispatcherServlet;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
-
-import com.spring.boot.entity.Operator;
 
 
 public class AuthInterceptor extends HandlerInterceptorAdapter {
@@ -22,8 +22,7 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 			response.sendRedirect("toLogin");
 			return false;
 		}
-		
-		return super.preHandle(request, response, handler);	
+		return super.preHandle(request, response, handler);
 	}
 
 	@Override

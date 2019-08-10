@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+
+<div class="container-div">
+    <div class="row">
+        <div class="col-sm-12 search-collapse">
+            <form id="form" class="form-horizontal m" >
+                <div class="form-group"  >
+                    <label class="col-sm-3 control-label ">返回类型名称：</label>
+                    <div class="col-sm-8">
+                        <select  class="form-control" onchange="selectOnchange(this)">
+                            <option></option>
+                            <option th:each="temp : ${returnResultTempleList}"
+                                    th:value="${temp.code}"
+                                    th:text="${temp.name}" >规则名称</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group" id="div_form" ></div>
+
+            </form>
+        </div>
+    </div>
+
+
+</div>
+
+
+<div th:include="include :: footer"></div>
+
+<script th:inline="javascript">
+    var prefix = ctx + "returnResultTemple";
+
+
+    var funDatas=[[${returnResultTempleList}]];
+    var dictUrl=ctx+"/dict/data/type";
+    var cnExpressName="cn_express";
+
+    var returnTempleMap ={};
+    layui.use(['table','jquery','form','layer'], function(){
+        var table = layui.table //表格
+            ,layer = layui.layer //弹层
+            ,$ = layui.jquery //jquery
+            ,form=layui.form;
+        ;
+
+    });
+
+    function selectOnchange(obj) {
+        var val=$(obj).val();
+        var dom=$("#div_form");
+        $(dom).html("");
+        returnTempleMap={};
+        $.each(funDatas,function (i,fun) {
+            if(val==fun.code){
+
+                var cnExpressDom=$('<input    type="hidden"   />');
+                $(cnExpressDom).val(fun.cnExpress);
+                $(cnExpressDom).attr("name",cnExpressName);
+                $(cnExpressDom).attr("id",cnExpressName);
+                $(dom).append(fun.html).append(cnExpressDom);
+                returnTempleMap['returnTempleCode']=fun.code;
+                return true;
+            }
+
+        });
+
+    }
+
+    function submitHandler() {
+        var cnexpress=  $("#"+cnExpressName);
+        var paramMap ={};
+        returnTempleMap['paramMap']={};
+        returnTempleMap[cnExpressName]={};
+        var t = $('#form').serializeArray();
+        $.each(t, function (i,element) {
+            var name =this.name;
+            var formName=$('[name='+name+']');
+            if($(formName).is("select")){
+                var option=$(formName).find("option:selected");
+                paramMap[this.name] ={"name":this.name,"value":this.value,"text":$(option).text()} ;
+            }else{
+                paramMap[this.name] ={"name":this.name,"value":this.value,"text":this.text} ;
+            }
+        });
+        regExec(cnexpress,paramMap);
+        returnTempleMap['paramMap']=paramMap;
+        returnTempleMap[cnExpressName]={"name":cnExpressName,"value":$(cnexpress).val(),"text":$(cnexpress).text()} ;
+        return returnTempleMap;
+    }
+    function regExec(dom,paramMap){
+        var regx=/\$\{(.+?)\}/g;
+        var cnexpressVal= $(dom).val();
+        htmlExecCallback(regx,dom,function (index,regVal) {
+            var val=regVal[1];
+            if(val.indexOf(".")>-1){
+                var key=val.substring(val.indexOf(".")+1,val.length);
+                val=val.substring(0,val.indexOf("."));
+                var json=paramMap[val];
+
+                console.log("key"+key+"|"+"json"+json)
+                cnexpressVal=  cnexpressVal.replace(regVal[0],json[key]);
+            }else{
+                cnexpressVal=  cnexpressVal.replace(regVal[0],paramMap[val].value);
+            }
+
+        });
+        $(dom).val(cnexpressVal);
+
+
+    }
+
+    function selectByDict(id,code){
+        $.post(dictUrl+"/"+code,data,function (data) {
+            selectList(id,data,"dictValue","dictLabel");
+        });
+    }
+    function selectByGeneralQuery(id,code){
+
+    }
+    function  selectList(id,data,value,key) {
+        var dom=$("#"+id);
+             $(dom).html("");
+            $.each(data,function (i,obj) {
+                var option=$("<option></option>");
+                $(option).val(obj[value]);
+                $(option).html(obj[key]);
+                $(dom).append(option);
+            });
+
+    }
+</script>
+
+</body>
+
+
+</html>

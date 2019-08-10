@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+
+<div class="container-div">
+    <div class="row">
+        <div class="col-sm-12 search-collapse">
+            <form id="form" class="form-horizontal m" >
+                <div class="form-group"  >
+                    <label class="col-sm-3 control-label ">规则名称：</label>
+                    <div class="col-sm-8">
+                        <select  class="form-control" onchange="selectOnchange(this)">
+                            <option></option>
+                            <option th:each="temp : ${functionRouteTempleList}"
+                                    th:value="${temp.code}"
+                                    th:text="${temp.name}" >规则名称</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group" id="div_form" ></div>
+                <div class="form-group" id="div_param_from" ></div>
+
+            </form>
+        </div>
+    </div>
+
+
+</div>
+
+
+<div th:include="include :: footer"></div>
+
+<script th:inline="javascript">
+    var generalQueryPrefix = ctx + "generalQuery";
+    var funDatas=[[${functionRouteTempleList}]];
+    var selectListUrl=ctx+"/select/selectList";
+    var cnExpressName="cn_express";
+
+    var funTempleMap ={};
+    layui.use(['table','jquery','form','layer'], function(){
+        var table = layui.table //表格
+            ,layer = layui.layer //弹层
+            ,$ = layui.jquery //jquery
+            ,form=layui.form;
+        ;
+
+    });
+
+function selectOnchange(obj) {
+    var val=$(obj).val();
+    var dom=$("#div_form");
+    $(dom).html("");
+    funTempleMap={};
+    $.each(funDatas,function (i,fun) {
+        if(val==fun.code){
+
+            var cnExpressDom=$('<input    type="hidden"   />');
+            $(cnExpressDom).val(fun.cnExpress);
+            $(cnExpressDom).attr("name",cnExpressName);
+            $(cnExpressDom).attr("id",cnExpressName);
+            $(dom).append(fun.html).append(cnExpressDom);
+            funTempleMap['funTempleCode']=fun.code;
+            return true;
+        }
+
+    });
+
+}
+//未实现20190614
+    function  selectList(id,code) {
+        var data={"code":code};
+        var dom=$("#"+id);
+        $.post(selectListUrl+"/"+code,data,function (data) {
+            $.each(data,function (i,obj) {
+                var option=$("<option></option>");
+                $(option).val(obj.value);
+                $(option).html(obj.name);
+                $(dom).append(option);
+            });
+        });
+
+    }
+    function submitHandler() {
+     var cnexpress=  $("#"+cnExpressName);
+        var paramMap ={};
+        funTempleMap['paramMap']={};
+        funTempleMap[cnExpressName]={};
+        var t = $('#form').serializeArray();
+        $.each(t, function (i,element) {
+            var name =this.name;
+            var formName=$('[name='+name+']');
+            if($(formName).is("select")){
+                var option=$(formName).find("option:selected");
+                paramMap[this.name] ={"name":this.name,"value":this.value,"text":$(option).text()} ;
+            }else{
+                paramMap[this.name] ={"name":this.name,"value":this.value,"text":$(formName).text()} ;
+            }
+        });
+        regExec(cnexpress,paramMap);
+        funTempleMap['paramMap']=paramMap;
+        funTempleMap[cnExpressName]={"name":cnExpressName,"value":$(cnexpress).val(),"text":$(cnexpress).text()} ;
+        return funTempleMap;
+    }
+    function regExec(dom,paramMap){
+        var regx=/\$\{(.+?)\}/g;
+        var cnexpressVal= $(dom).val();
+        htmlExecCallback(regx,dom,function (index,regVal) {
+            var val=regVal[1];
+            if(val.indexOf(".")>-1){
+                var key=val.substring(val.indexOf(".")+1,val.length);
+                 val=val.substring(0,val.indexOf("."));
+                var json=paramMap[val];
+
+                console.log("key"+key+"|"+"json"+json)
+                cnexpressVal=  cnexpressVal.replace(regVal[0],json[key]);
+            }else{
+                cnexpressVal=  cnexpressVal.replace(regVal[0],paramMap[val].value);
+            }
+
+        });
+        $(dom).val(cnexpressVal);
+    }
+
+    //html组件应用此方法查询
+    function findQuery(code){
+        var code=code;
+        var options={
+            url: generalQueryPrefix+"/paramRun/"+code+""
+            ,title:"返回结果"
+            ,callBack:function (index, layero) {
+                var iframeWin = layero.find('iframe')[0];
+                var returnTempleMap=iframeWin.contentWindow.submitHandler();
+                paramInput(returnTempleMap);
+                layer.close(index); //再执行关闭
+                return true;
+            }
+        };
+        $.modal.openOptions(options);
+    }
+    function  paramInput(returnTempleMap) {
+        var dom=$("#div_param_from");
+        $(dom).html("");
+        var text="";
+        var value="";
+        $.each(returnTempleMap, function (i,element) {
+            text=text+","+element.text;
+            value=value+","+element.value;
+        });
+        if(text!=""&&value!=""){
+            var inputText=$('<input type="text"  readonly  class="form-control"  >');
+            $(inputText).attr("name","code");
+            $(inputText).text(text);
+            $(inputText).val(value);
+            $(dom).append(inputText);
+        }
+
+    }
+</script>
+
+</body>
+
+
+</html>

@@ -8,7 +8,8 @@
   <properties>  
     <project.build.name>tools</project.build.name>  
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <project.build.springVersion>1.4.1.RELEASE</project.build.springVersion>    
+    <project.build.springVersion>1.5.9.RELEASE</project.build.springVersion>
+     <mybatis-plus-boot-starter.version>2.2.0</mybatis-plus-boot-starter.version>
   </properties>  
   <dependencies>
 <!--     <dependency> -->
@@ -31,6 +32,25 @@
   <artifactId>spring-boot-starter-actuator</artifactId>
   <version>${project.build.springVersion}</version>
 </dependency>
+
+<!-- 监控-->
+      <!--<dependency>-->
+          <!--<groupId>de.codecentric</groupId>-->
+          <!--<artifactId>spring-boot-admin-starter-server</artifactId>-->
+          <!--<version>1.5.7</version>-->
+      <!--</dependency>-->
+      <!--<dependency>-->
+          <!--<groupId>de.codecentric</groupId>-->
+          <!--<artifactId>spring-boot-admin-server-ui</artifactId>-->
+          <!--<version>1.5.6</version>-->
+      <!--</dependency>-->
+
+      <dependency>
+          <groupId>com.alibaba.spring.boot</groupId>
+          <artifactId>dubbo-spring-boot-starter</artifactId>
+          <version>2.0.0</version>
+      </dependency>
+
 <dependency>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-cache</artifactId>
@@ -40,12 +60,18 @@
     <groupId>org.springframework.boot</groupId>  
     <artifactId>spring-boot-starter-data-redis</artifactId>
     <version>${project.build.springVersion}</version>  
-</dependency>  
- 
+</dependency>
+
+      <dependency>
+          <artifactId>resourcesDemo</artifactId>
+          <groupId>com.wu</groupId>
+          <version>1.0-SNAPSHOT</version>
+      </dependency>
+
 <!-- 配置视图解析 -->
 <dependency>
    <groupId>org.springframework.boot</groupId>
-   <artifactId>spring-boot-starter-thymeleaf</artifactId>
+   <artifactId>spring-boot-starter-freemarker</artifactId>
    <version>${project.build.springVersion}</version>
    <exclusions>
 		<exclusion>
@@ -54,12 +80,20 @@
 		</exclusion>
 	</exclusions>
 </dependency>
-<dependency>
-<!-- 	使用spring.thymeleaf.mode=LEGACYHTML5必须用 -->
-	<groupId>net.sourceforge.nekohtml</groupId>
-	<artifactId>nekohtml</artifactId>
-	 <version>1.9.22</version>
-</dependency>
+
+      <!-- 模板引擎 Thymeleaf 依赖 -->
+      <dependency>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-starter-thymeleaf</artifactId>
+          <version>${project.build.springVersion}</version>
+      </dependency>
+
+    <dependency>
+    <!-- 	使用spring.thymeleaf.mode=LEGACYHTML5必须用 -->
+        <groupId>net.sourceforge.nekohtml</groupId>
+        <artifactId>nekohtml</artifactId>
+         <version>1.9.22</version>
+    </dependency>
 
 
 <!--jsp页面使用jstl标签-->
@@ -82,16 +116,24 @@
 <!--   <version>${project.build.springVersion}</version> -->
 <!-- </dependency> -->
 <!-- 配置c3p0数据源 -->
-<dependency>
-      <groupId>c3p0</groupId>
+    <dependency>
+      <groupId>com.mchange</groupId>
       <artifactId>c3p0</artifactId>
-      <version>0.9.1.2</version>
-</dependency>
-<dependency>
-    <groupId>org.mybatis.spring.boot</groupId>
-    <artifactId>mybatis-spring-boot-starter</artifactId>
-    <version>1.1.1</version>
-</dependency>
+      <version>0.9.5.2</version>
+    </dependency>
+      <dependency>
+          <groupId>com.mchange</groupId>
+          <artifactId>mchange-commons-java</artifactId>
+          <version>0.2.11</version>
+      </dependency>
+
+
+      <!-- 分页 -->
+    <!--  <dependency>
+          <groupId>com.github.pagehelper</groupId>
+          <artifactId>pagehelper</artifactId>
+          <version>5.1.4</version>
+      </dependency>-->
 
 		<dependency>
 			<groupId>se.spagettikod</groupId>
@@ -123,24 +165,184 @@
             <version>${project.build.springVersion}</version>
             <scope>test</scope>
 	    </dependency>
-	    
+
+      <dependency>
+          <groupId>com.wu</groupId>
+          <artifactId>wu.objectid</artifactId>
+          <version>1.0-SNAPSHOT</version>
+      </dependency>
+
 	    <dependency>
 		  <groupId>commons-lang</groupId>
 		  <artifactId>commons-lang</artifactId>
 		  <version>2.6</version>
 		</dependency>
+      <!-- 生成objectid MongoDB 生成模式-->
+      <dependency>
+          <groupId>com.wu</groupId>
+          <artifactId>wu.objectid</artifactId>
+          <version>1.0-SNAPSHOT</version>
+      </dependency>
+      <dependency>
+          <groupId>com.wu</groupId>
+          <artifactId>c3p0Demo</artifactId>
+          <version>1.0-SNAPSHOT</version>
+      </dependency>
+
+      <!-- mybatis 1 -->
+      <dependency>
+          <groupId>com.baomidou</groupId>
+          <artifactId>mybatis-plus-boot-starter</artifactId>
+          <version>${mybatis-plus-boot-starter.version}</version>
+      </dependency>
+
+<!-- mybatis 2
+      <dependency>
+          <groupId>org.mybatis.spring.boot</groupId>
+          <artifactId>mybatis-spring-boot-starter</artifactId>
+          <version>1.2.2</version>
+      </dependency>
+
+      <dependency>
+      <groupId>tk.mybatis</groupId>
+      <artifactId>mapper-spring-boot-starter</artifactId>
+      <version>2.0.2</version>
+      </dependency>-->
+
+      <!--<dependency>
+          <groupId>com.baomidou</groupId>
+          <artifactId>mybatis-plus</artifactId>
+          <version>2.3.1</version>
+      </dependency>-->
+
+<!-- 状态机包-->
+      <dependency>
+          <groupId>org.springframework.statemachine</groupId>
+          <artifactId>spring-statemachine-core</artifactId>
+          <version>1.2.0.RELEASE</version>
+      </dependency>
+
+      <!-- 可视化规则-->
+      <!--<dependency>-->
+          <!--<groupId>com.bstek.urule</groupId>-->
+          <!--<artifactId>urule-console-pro</artifactId>-->
+          <!--<version>2.0.9-SNAPSHOT</version>-->
+      <!--</dependency>-->
+
+
+
+      <!--velocity代码生成使用模板 -->
+      <dependency>
+          <groupId>org.apache.velocity</groupId>
+          <artifactId>velocity</artifactId>
+          <version>1.7</version>
+          <scope>test</scope>
+      </dependency>
+
+      <!-- 文件上传导出-->
+      <dependency>
+          <groupId>commons-io</groupId>
+          <artifactId>commons-io</artifactId>
+          <version>2.5</version>
+      </dependency>
+      <dependency>
+          <groupId>commons-fileupload</groupId>
+          <artifactId>commons-fileupload</artifactId>
+          <version>1.2.1</version>
+      </dependency>
+
+      <!-- excel工具 -->
+      <dependency>
+          <groupId>org.apache.poi</groupId>
+          <artifactId>poi-ooxml</artifactId>
+          <version>3.17</version>
+      </dependency>
+      <!-- Shiro 引用  -->
+      <dependency>
+          <groupId>org.apache.shiro</groupId>
+          <artifactId>shiro-spring-boot-starter</artifactId>
+          <version>1.4.0</version>
+      </dependency>
+      <!-- Shiro使用EhCache缓存框架 -->
+      <dependency>
+          <groupId>org.apache.shiro</groupId>
+          <artifactId>shiro-ehcache</artifactId>
+          <version>1.4.0</version>
+      </dependency>
+
+
+      <!-- swagger2-->
+      <dependency>
+          <groupId>io.springfox</groupId>
+          <artifactId>springfox-swagger2</artifactId>
+          <version>2.7.0</version>
+      </dependency>
+
+      <!-- swagger2-UI-->
+      <dependency>
+          <groupId>io.springfox</groupId>
+          <artifactId>springfox-swagger-ui</artifactId>
+          <version>2.7.0</version>
+      </dependency>
+
+      <!-- 直接引入运行报错-->
+   <!--   <dependency>
+          <groupId>org.springframework.cloud</groupId>
+          <artifactId>spring-cloud-starter-config</artifactId>
+          <version>2.1.0.RELEASE</version>
+      </dependency>-->
+      <!-- get set 注解形式-->
+      <dependency>
+          <groupId>org.projectlombok</groupId>
+          <artifactId>lombok</artifactId>
+          <version>1.16.10</version>
+      </dependency>
+
   </dependencies>
-<build>
+
+
+
+    <build>
     <plugins>
       <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.6.1</version>
-                <configuration>
+          <executions>
+              <execution></execution>
+          </executions>
+
+          <configuration>
                     <source>1.8</source>
                     <target>1.8</target>
                 </configuration>
             </plugin>
+        <plugin>
+            <groupId>com.google.cloud.tools</groupId>
+            <artifactId>jib-maven-plugin</artifactId>
+            <version>0.9.4</version>
+            <configuration>
+                <to>
+                    <image>gcr.io/my-gcp-project/my-app</image>
+                </to>
+            </configuration>
+        </plugin>
+
+       <!-- <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-source-plugin</artifactId>
+            <version>2.1.1</version>
+            <executions>
+                <execution>
+                    <id>attach-sources</id>
+                    <phase>verify</phase>
+                    <goals>
+                        <goal>jar-no-fork</goal>
+                    </goals>
+                </execution>
+            </executions>
+        </plugin>-->
+
     </plugins>
 </build>
 </project>

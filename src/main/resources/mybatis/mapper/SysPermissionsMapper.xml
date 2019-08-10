@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.boot.mapper.SysPermissionsMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.spring.boot.entity.SysPermissions">
+    <result column="code" property="code" />
+    <result column="optimistic" property="optimistic" />
+    <result column="create_time" property="createTime" />
+    <result column="update_time" property="updateTime" />
+        <result column="status" property="status" />
+        <result column="name" property="name" />
+        <result column="permissions_mark" property="permissionsMark" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+    code,
+    optimistic,
+    create_time ,
+    update_time ,
+        status        ,        name        ,        permissions_mark            </sql>
+
+
+    <select id="selectPageBySysPermissions" resultMap="BaseResultMap">
+        select  <include refid="Base_Column_List"/> from sys_permissions
+        <where>
+                            <if test="status != null and status != ''">
+                    AND status = #{status}
+                </if>
+                            <if test="name != null and name != ''">
+                    AND name = #{name}
+                </if>
+                            <if test="permissionsMark != null and permissionsMark != ''">
+                    AND permissions_mark = #{permissionsMark}
+                </if>
+            
+        </where>
+    </select>
+    <select id="selectPermsByUserId" resultType="java.lang.String">
+        select distinct s.permissions_mark from sys_permissions s
+          inner join sys_role_permissions_ref r_r on r_r.per_code=s.code
+          inner join sys_operator_role_ref orr on orr.role_code=r_r.rule_code
+          where 1=1
+          and orr.oper_code=#{userCode}
+    </select>
+</mapper>

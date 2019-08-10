@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.boot.mapper.FunResultRefMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.spring.boot.entity.FunResultRef">
+    <result column="code" property="code" />
+    <result column="update_time" property="updateTime" />
+    <result column="create_time" property="createTime" />
+    <result column="optimistic" property="optimistic" />
+        <result column="query_code" property="queryCode" />
+        <result column="status" property="status" />
+        <result column="clss_ui" property="clssUi" />
+        <result column="param_exp" property="paramExp" />
+        <result column="param_key" property="paramKey" />
+        <result column="title" property="title" />
+        <result column="row_total" property="rowTotal" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+    code,
+    update_time ,
+    create_time ,
+    optimistic,
+                query_code        ,
+                    status        ,
+                clss_ui        ,
+                param_exp        ,
+                param_key        ,
+                    title        ,
+                row_total
+    </sql>
+
+
+    <select id="selectPageByFunResultRef" resultMap="BaseResultMap">
+        select  <include refid="Base_Column_List"/> from fun_result_ref
+        <where>
+                            <if test="query_code != null and query_code != ''">
+                    AND query_code = #{query_code}
+                </if>
+                            <if test="status != null and status != ''">
+                    AND status = #{status}
+                </if>
+                            <if test="clss_ui != null and clss_ui != ''">
+                    AND clss_ui = #{clss_ui}
+                </if>
+                            <if test="param_exp != null and param_exp != ''">
+                    AND param_exp = #{param_exp}
+                </if>
+                            <if test="param_key != null and param_key != ''">
+                    AND param_key = #{param_key}
+                </if>
+                            <if test="title != null and title != ''">
+                    AND title = #{title}
+                </if>
+                            <if test="row_total != null and row_total != ''">
+                    AND row_total = #{row_total}
+                </if>
+            
+        </where>
+    </select>
+</mapper>

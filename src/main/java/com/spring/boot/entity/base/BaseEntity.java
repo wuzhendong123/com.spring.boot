@@ -1,25 +1,72 @@
 package com.spring.boot.entity.base;
 
-import se.spagettikod.optimist.Identity;
-import se.spagettikod.optimist.Version;
 
-public class BaseEntity {
+
+
+import com.baomidou.mybatisplus.MybatisDefaultParameterHandler;
+import com.baomidou.mybatisplus.activerecord.Model;
+import com.baomidou.mybatisplus.annotations.KeySequence;
+import com.baomidou.mybatisplus.annotations.TableField;
+import com.baomidou.mybatisplus.annotations.TableId;
+import com.baomidou.mybatisplus.annotations.Version;
+import com.baomidou.mybatisplus.enums.FieldFill;
+import com.baomidou.mybatisplus.enums.IdType;
+import com.baomidou.mybatisplus.toolkit.TableInfoHelper;
+import org.apache.catalina.core.ApplicationFilterFactory;
+import org.apache.ibatis.binding.MapperProxy;
+import org.mybatis.spring.mapper.MapperFactoryBean;
+import org.springframework.web.WebApplicationInitializer;
+import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
+
+import java.io.Serializable;
+import java.util.Date;
+
+
+public class BaseEntity<T> extends Model implements Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	@Identity("ID")
-	private Long id;
-	@Version("OPTIMISTIC")
-    private Integer optimistic = 0;
+//	org.springframework.boot.autoconfigure.web.HttpEncodingAutoConfiguration
+//		TableInfoHelper
+//	MybatisDefaultParameterHandler
+//	ApplicationFilterFactory
+//	WebApplicationInitializer
+	//MapperFactoryBean
+	//MapperProxy
+	@TableId( type = IdType.ID_WORKER_STR)
+	private String code;
+	@Version
+	@TableField(value="optimistic",fill =  FieldFill.INSERT)
+	private Integer optimistic ;
+	@TableField(value="create_time",fill =  FieldFill.INSERT_UPDATE)
+    private Date createTime;
 
-	public Long getId() {
-		return id;
+    public Date getCreateTime() {
+        return createTime;
+    }
+	@TableField(value="update_time",fill =  FieldFill.UPDATE)
+	private Date updateTime;
+
+	public Date getUpdateTime() {
+		return updateTime;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public void setUpdateTime(Date updateTime) {
+		this.updateTime = updateTime;
+	}
+
+	public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
 	}
 
 	public Integer getOptimistic() {
@@ -35,15 +82,19 @@ public class BaseEntity {
 		if (!(other instanceof BaseEntity))
 			return false;
 		BaseEntity castOther = (BaseEntity) other;
-		if(id==null||castOther.getId()==null){
+		if(code==null||castOther.getCode()==null){
 			return false;
 		}
-		return id.equals(castOther.getId());
+		return code.equals(castOther.getCode());
 	}
 
 	@Override
 	public int hashCode() {
-		return new StringBuffer().append(id).toString().hashCode();
-	}	
+		return new StringBuffer().append(code).toString().hashCode();
+	}
 
+	@Override
+	protected Serializable pkVal() {
+		return code;
+	}
 }

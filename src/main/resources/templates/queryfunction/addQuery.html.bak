@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="white-bg">
+<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+    <form class="form-horizontal m" id="form-add" th:object="${queryFunction}">
+        <input name="queryCode"   type="hidden" th:field="*{code}"   />
+
+        <div class="layui-carousel form-group" id="carousel1" lay-filter="carousel1">
+            <div carousel-item="">
+                <div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label ">查询函数名称1：</label>
+                        <div class="col-sm-8">
+                            <div class="input-group">
+                                <input class="form-control" type="text" id="name" name="name">
+                                <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label ">查询函数名称2：</label>
+                        <div class="col-sm-8">
+                            <div class="input-group">
+                                <input class="form-control" type="text" id="name" name="name">
+                                <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div>条目3</div>
+                <div>条目4</div>
+                <div>条目5</div>
+            </div>
+        </div>
+
+
+
+    </form>
+</div>
+<div th:include="include::footer"></div>
+<script>
+    var prefix = ctx + "queryfunction";
+    layui.use(['carousel', 'form'], function(){
+        var carousel = layui.carousel
+            ,form = layui.form;
+
+        //常规轮播
+    carousel.render({
+        elem: '#carousel1'
+        ,arrow: 'always'
+        ,width: '650px'
+        ,height: '380px'
+        ,autoplay:false
+    });
+
+    });
+
+    function submitHandler(){
+        $.operate.save(prefix + "/doAdd", $('#form-add').serialize());
+    }
+    function htmlExec(obj){
+        var val=$(obj).val();
+        var regx=/\#\{(.+?)\}/g;
+        var index=0;
+        $(".html_append").remove();
+        while(true){
+            var rs=regx.exec(val);
+
+            if(rs==null||rs==undefined){
+                return ;
+            }
+            rs=rs[1];
+            var div=$("<div class=\"form-group html_append\" ></div>");
+            var row='<input class="form-control" type="hidden" name="paramQuery['+index+'].key"  value="'+rs+'" >';
+            var rowKey='<label class="col-sm-3 control-label\"><input class="form-control" type="hidden" name="paramMapQuery['+index+'].key"  value="'+rs+'" >'+rs+'</label>';
+            var rowValue='<div class="col-sm-4"> <input class="form-control" type="text" name="paramMapQuery['+index+'].value"  > </div>';
+            div.append(rowKey).append(rowValue);
+            $("#form-paramHtmlTemple-add").append(div);
+            index++;
+        }
+
+    }
+</script>
+</body>
+</html>

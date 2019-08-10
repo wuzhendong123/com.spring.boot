@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="white-bg">
+	<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+		<form class="form-horizontal m" id="form-edit" th:object="${queryFunction}">
+			<input name="code"   type="hidden" th:field="*{code}"   />
+			<input name="optimistic"   type="hidden" th:field="*{optimistic}"   />
+
+			<div class="form-group">
+				<label class="col-sm-3 control-label">名称：</label>
+				<div class="col-sm-8">
+					<input class="form-control" type="text" name="name" id="name" th:field="*{name}">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">表达式：</label>
+				<div class="col-sm-8">
+					<textarea class="form-control"  rows="4" name="express" placeholder="表达式"  th:text="${queryFunction.express}">请输入文本</textarea>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-sm-3 control-label">状态：</label>
+				<div class="col-sm-8">
+					<div class="radio-box" th:each="dict : ${@dict.getType('sys_status_type')}">
+						<input type="radio" th:id="${dict.code}" name="status" th:value="${dict.dictValue}" th:field="*{status}">
+						<label th:for="${dict.code}" th:text="${dict.dictLabel}"></label>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+	<div th:include="include::footer"></div>
+	 <script>
+        var prefix = ctx + "queryfunction";
+
+        
+        function submitHandler() {
+	            $.operate.save(prefix + "/doEdit", $('#form-edit').serialize());
+	    }
+
+        function html(obj){
+            htmlExec(obj,$("#form-edit"));
+
+        }
+        function htmlExec(obj,dom){
+            var val=$(obj).val();
+            var regx=/\$\{(.+?)\}/g;
+            var index=0;
+            $(".html_append").remove();
+            htmlExecCallback(regx,obj,function (index,regVal) {
+                var rs=  regVal[1];
+                var div=$("<div class=\"form-group html_append\" ></div>");
+                var row='<input class="form-control" type="hidden" name="paramQuery['+index+'].key"  value="'+rs+'" >';
+                var rowKey='<label class="col-sm-3 control-label\"><input class="form-control" type="hidden" name="paramMapQuery['+index+'].key"  value="'+rs+'" >'+rs+'</label>';
+                var rowValue='<div class="col-sm-4"> <input class="form-control" type="text" name="paramMapQuery['+index+'].value"  > </div>';
+                div.append(row).append(rowKey).append(rowValue);
+                $(dom).append(div);
+            });
+
+        }
+    </script>
+</body>
+</html>

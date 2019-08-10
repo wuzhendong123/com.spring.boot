@@ -1,14 +1,15 @@
 package com.spring.boot.config;
 
+import org.apache.ibatis.binding.MapperProxy;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import com.spring.boot.entity.Student;
 
-@Configuration
+// @Configuration
 public class StudentBeanConfig {
-	
+	//org.springframework.context.annotation.ConfigurationClassParser
 	@Bean(name="aStudent")
 	@Qualifier("aStudent")
 	public Student aStudent(){

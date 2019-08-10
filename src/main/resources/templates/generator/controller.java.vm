@@ -1,0 +1,51 @@
+package ${package.Controller};
+
+
+import org.springframework.web.bind.annotation.RequestMapping;
+import com.baomidou.mybatisplus.plugins.Page;
+
+#if(${restControllerStyle})
+import org.springframework.web.bind.annotation.RestController;
+#else
+import org.springframework.stereotype.Controller;
+#end
+#if(${superControllerClassPackage})
+import ${superControllerClassPackage};
+#end
+
+/**
+ * <p>
+ * $!{table.comment} 前端控制器
+ * </p>
+ *
+ * @author ${author}
+ * @since ${date}
+ */
+#if(${restControllerStyle})
+@RestController
+#else
+@Controller
+#end
+@RequestMapping("#if(${package.ModuleName})/${package.ModuleName}#end/#if(${controllerMappingHyphenStyle})${controllerMappingHyphen}#else${table.entityPath}#end")
+public class ${table.controllerName} {
+@Autowired
+private ${table.serviceName} ${table.serviceImplName};
+private String prefix =  "${table.entityPath}";
+@RequestMapping(value="/index")
+public  String index(){
+        return prefix+"/${table.entityPath}";
+        }
+@RequestMapping("/add")
+public String add()
+        {
+        return prefix + "/add";
+        }
+@RequestMapping(value="/list")
+@ResponseBody
+public R list(@RequestParam("page") int page, @RequestParam("limit") int limit, ${entity} obj){
+        Page<${entity} > pagePg=new Page<>(page,limit);
+        pagePg= ${table.serviceImplName}.selectPageBy${entity}(pagePg,obj);
+        R r=R.okList(pagePg);
+        return r;
+        }
+}

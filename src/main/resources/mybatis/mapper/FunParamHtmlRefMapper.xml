@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.boot.mapper.FunParamHtmlRefMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.spring.boot.entity.FunParamHtmlRef">
+    <result column="code" property="code" />
+     <result column="update_time" property="updateTime" />
+    <result column="create_time" property="createTime" />
+    <result column="optimistic" property="optimistic" />
+        <result column="query_code" property="queryCode" />
+        <result column="status" property="status" />
+        <result column="param_html_code" property="paramHtmlCode" />
+        <result column="html" property="html" />
+        <result column="param_exp" property="paramExp" />
+        <result column="param_key" property="paramKey" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+    code,
+    create_time ,
+    update_time,
+    optimistic,
+                query_code        ,
+                    status        ,
+                param_html_code        ,
+                    html        ,
+                param_exp        ,
+                param_key
+    </sql>
+
+
+    <select id="selectByFunCode" resultMap="BaseResultMap">
+        select  <include refid="Base_Column_List"/> from fun_param_html_ref
+        where 1=1
+          AND status = 'TRUE'
+          AND query_code = #{code}
+    </select>
+    <select id="selectPageByFunParamHtmlRef" resultMap="BaseResultMap">
+        select  <include refid="Base_Column_List"/> from fun_param_html_ref
+        <where>
+                   <if test="queryCode != null and queryCode != ''">
+                    AND query_code = #{queryCode}
+                </if>
+                            <if test="status != null and status != ''">
+                    AND status = #{status}
+                </if>
+                            <if test="paramHtmlCode != null and paramHtmlCode != ''">
+                    AND param_html_code = #{paramHtmlCode}
+                </if>
+                            <if test="html != null and html != ''">
+                    AND html = #{html}
+                </if>
+                            <if test="paramExp != null and paramExp != ''">
+                    AND param_exp = #{paramExp}
+                </if>
+                            <if test="paramKey != null and paramKey != ''">
+                    AND param_key = #{paramKey}
+                </if>
+            
+        </where>
+    </select>
+</mapper>

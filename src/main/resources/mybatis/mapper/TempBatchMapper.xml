@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.boot.mapper.TempBatchMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.spring.boot.entity.TempBatch">
+    <result column="code" property="code" />
+    <result column="create_time" property="createTime" />
+    <result column="optimistic" property="optimistic" />
+    <result column="update_time" property="updateTime" />
+        <result column="mark" property="mark" />
+        <result column="bacth_no" property="bacthNo" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+    code,
+    create_time ,
+    optimistic,
+    update_time ,
+                    mark        ,
+                bacth_no        ,
+    </sql>
+
+
+    <select id="selectPageByTempBatch" resultMap="BaseResultMap">
+        select  <include refid="Base_Column_List"/> from temp_batch
+        <where>
+                            <if test="mark != null and mark != ''">
+                    AND mark = #{mark}
+                </if>
+                            <if test="bacthNo != null and bacthNo != ''">
+                    AND bacth_no = #{bacthNo}
+                </if>
+            
+        </where>
+    </select>
+</mapper>

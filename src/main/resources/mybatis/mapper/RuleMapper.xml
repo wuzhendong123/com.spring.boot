@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.boot.mapper.RuleMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.spring.boot.entity.Rule">
+    <result column="code" property="code" />
+    <result column="update_time" property="updateTime" />
+    <result column="create_time" property="createTime" />
+    <result column="optimistic" property="optimistic" />
+        <result column="name" property="name" />
+        <result column="status" property="status" />
+        <result column="route_code" property="routeCode" />
+        <result column="data_version" property="dataVersion" />
+        <result column="level" property="level" />
+        <result column="parent_rule_code" property="parentRuleCode" />
+    </resultMap>
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMapBean" type="com.spring.boot.query.respone.RuleBean">
+        <result column="code" property="code" />
+        <result column="name" property="name" />
+        <result column="status" property="status" />
+        <result column="route_code" property="routeCode" />
+        <result column="route_name" property="routeName" />
+        <result column="level" property="level" />
+        <result column="parent_rule_code" property="parentRuleCode" />
+        <result column="success_action_type" property="successActionType" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+    code,
+    update_time ,
+    create_time ,
+    optimistic,
+                    name        ,
+                    status        ,
+                route_code        ,
+                success_action_type        ,
+                data_version        ,
+                    level        ,
+                parent_rule_code
+    </sql>
+
+
+    <select id="selectPageByRule" resultMap="BaseResultMap">
+        select  <include refid="Base_Column_List"/> from rule
+        <where>
+                <if test="name != null and name != ''">
+                    AND name = #{name}
+                </if>
+                <if test="status != null and status != ''">
+                    AND status = #{status}
+                </if>
+                            <if test="routeCode != null and routeCode != ''">
+                    AND route_code = #{routeCode}
+                </if>
+                            <if test="successActionType != null and successActionType != ''">
+                    AND success_action_type = #{successActionType}
+                </if>
+                            <if test="dataVersion != null and dataVersion != ''">
+                    AND data_version = #{dataVersion}
+                </if>
+                            <if test="level != null and level != ''">
+                    AND level = #{level}
+                </if>
+                            <if test="parentRuleCode != null and parentRuleCode != ''">
+                    AND parent_rule_code = #{parentRuleCode}
+                </if>
+            
+        </where>
+        order by level asc
+    </select>
+    <select id="selectParentByRouteCode" resultMap="BaseResultMap">
+        select  <include refid="Base_Column_List"/> from rule where route_code=#{routeCode} and parent_rule_code is null order by level asc
+    </select>
+    <!--<select id="findByRouteAllTree" resultMap="BaseResultMap">-->
+        <!--select  <include refid="Base_Column_List"/> from rule where parent_rule_code=#{parentRouteCode}-->
+    <!--</select>-->
+    <select id="findByParentRuleCode" resultMap="BaseResultMap">
+        select  <include refid="Base_Column_List"/> from rule where parent_rule_code=#{parentRuleCode}
+        <if test="status != null and status != ''">
+            AND status = #{status}
+        </if>
+        order by level asc
+    </select>
+    <select id="selectPageByRuleQuery" resultMap="BaseResultMapBean">
+        select r.code,r.name,r.status,r.route_code,ro.name as route_name,r.level,r.parent_rule_code,r.success_action_type from rule r
+        inner join route ro on ro.code=r.route_code
+        where 1=1
+        <if test="status != null and status != ''">
+            AND r.status = #{status}
+        </if>
+        <if test="routeCode != null and routeCode != ''">
+            AND r.route_code = #{routeCode}
+        </if>
+        <if test="routeName != null and routeName != ''">
+            AND ro.name  like concat( #{routeName}, '%')
+        </if>
+    </select>
+
+</mapper>

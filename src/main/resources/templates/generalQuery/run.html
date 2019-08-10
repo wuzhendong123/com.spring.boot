@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="white-bg">
+<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+    <div class="row">
+        <div class="col-sm-12 search-collapse">
+            <form class="form-horizontal m" id="form-paramHtmlTemple-add"  enctype="multipart/form-data">
+                <div class="form-group col-md-6" th:each="funParamHtmlRef:${funParamHtmlRefs}" th:utext="${funParamHtmlRef.html}">
+
+                </div>
+                <div class="form-group" >
+                    <div class="col-sm-4"></div>
+                    <div class="col-sm-4">
+                        <a class="btn btn-primary btn-rounded btn-sm" onclick="searchFrom(tableM)"><i class="fa fa-search"></i>&nbsp;搜索</a>
+                        <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+        <div class="col-sm-12 select-table table-striped">
+            <table class="layui-hide" id="fun_table" lay-filter="fun_table"></table>
+        </div>
+    </div>
+</div>
+<script type="text/html" id="funTool">
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="detail">查看</a>
+</script>
+<script type="text/html" id="funRowTool">
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="export">导出</a>
+</script>
+<div th:include="include::footer"></div>
+<script  th:inline="javascript">
+    var prefix = ctx + "generalQuery";
+    var code=[[${queryFunction.code}]];
+    var colls=[[${@generalQueryController.findArrayByFunCtion(code)}]];
+    var tableM,tableOptions;
+
+    function submitHandler() {
+
+    }
+
+
+    $(document).ready(
+        layui.use(['table','jquery','form','layer','upload'], function(){
+            var table = layui.table //表格
+                ,layer = layui.layer //弹层
+                ,$ = layui.jquery //jquery
+                ,upload = layui.upload //upload
+                ,form=layui.form;
+            ;
+
+            //执行实例
+            var uploadInst = upload.render({
+                elem: '#test1' //绑定元素
+                ,url: prefix+'/upload/' //上传接口
+                ,data:{batchno:'batcho'}
+                ,done: function(res){
+                    //上传完毕回调
+                }
+                ,error: function(){
+                    //请求异常回调
+                }
+            });
+
+
+            tableOptions={
+                elem: '#fun_table'
+                ,height: 600
+                ,title:"查询"
+                ,url: prefix+'/generalFind/'+code //数据接口
+                ,exportUrl:prefix+'/export/'+code
+                ,page: true //开启分页
+                ,toolbar: '#funRowTool' //开启工具栏，此处显示默认图标，可以自定义模板，详见文档
+                ,totalRow: true //开启合计行
+                ,method:'post'
+                ,response: {   //返回数据内容格式
+                    statusName: 'code' //规定数据状态的字段名称，默认：code 接口返回结果状态
+                    ,statusCode: 0 //规定成功的状态码，默认：0    要与code的值比较信息是否获取到
+                    ,msgName: 'msg' //规定状态信息的字段名称，默认：msg
+                    ,countName: 'total' //规定数据总数的字段名称，默认：count 代表数据总数
+                    ,dataName: 'rows' //规定数据列表的字段名称，默认：data 代表数据集合
+
+                }
+
+                ,cols:colls
+            };
+            tableM=table.render(tableOptions);
+
+            //监听行工具事件
+            table.on('tool(fun_table)', function(obj){ //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
+                var data = obj.data //获得当前行数据
+                    ,layEvent = obj.event; //获得 lay-event 对应的值
+                console.log(layEvent+"|"+data);
+            });
+
+            //监听头工具栏事件
+            table.on('toolbar(fun_table)', function(obj){
+                var checkStatus = table.checkStatus(obj.config.id)
+                    ,data = checkStatus.data; //获取选中的数据
+                switch (obj.event){
+                    case 'export':
+                        searchExport(tableM);
+                        break;
+                }
+                console.log(checkStatus+"|"+data);
+            });
+
+
+        })
+
+    );
+</script>
+</body>
+</html>

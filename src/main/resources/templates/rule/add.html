@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="white-bg">
+<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+    <form class="form-horizontal m" id="form-rule-add" >
+        <input name="rule.routeCode"   type="hidden" th:value="${routeCode}"   />
+        <input name="rule.parentRuleCode" id="treeId"   type="hidden" th:if="${parentRule!=null}"   th:value="${parentRule.code}"/>
+
+        <div class="form-group" th:if="${parentRule!=null}">
+            <label class="col-sm-3 control-label ">上级菜单：</label>
+            <div class="col-sm-8">
+                <div class="input-group">
+                    <input class="form-control" type="text" onclick="selectMenuTree()" id="treeName" readonly="true" th:value="${parentRule.name}"/>
+                    <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-3 control-label ">规则名称：</label>
+            <div class="col-sm-8">
+                <div class="input-group">
+                    <input class="form-control" type="text" id="name" name="rule.name">
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-3 control-label ">成功动作类型：</label>
+            <div class="col-sm-8">
+                <select  class="form-control" name="rule.successActionType" id="successActionType">
+                    <option></option>
+                    <option th:each="dict : ${@dict.getType('sys_action_type')}"
+                            th:value="${dict.dictValue}"
+                            th:text="${dict.dictLabel}" >动作类型</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-3 control-label ">顺序：</label>
+            <div class="col-sm-8">
+                <input class="form-control" type="text" id="level" name="rule.level">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label ">状态：</label>
+            <div class="col-sm-8">
+                <select  class="form-control" name="rule.status">
+                    <option th:each="dict : ${@dict.getType('sys_status_type')}"
+                            th:value="${dict.dictValue}"
+                            th:text="${dict.dictLabel}" >状态</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="layui-tab layui-tab-card">
+                <ul class="layui-tab-title">
+                    <li class="layui-this" >判定条件选择</li>
+                    <li  >规则返回选择</li>
+
+                </ul>
+                <div class="layui-tab-content layui-show" >
+                    <div class="layui-tab-item layui-show"  >
+                        <div class="form-group" style="margin-left:0px">
+                            <a class="btn btn-primary btn-rounded btn-sm" th:onclick="${'addFunRule('''+routeCode+''',this)'}"><i class="fa fa-search"></i>&nbsp;添加</a>
+                        </div>
+                        <div class="form-group" id="div_2" style="margin-left:0px">
+                        </div>
+                    </div>
+                    <div class="layui-tab-item"  >
+                        <div class="form-group" style="margin-left:0px">
+                            <a class="btn btn-primary btn-rounded btn-sm" th:onclick="${'addReturnResult(this)'}"><i class="fa fa-search"></i>&nbsp;添加</a>
+                        </div>
+                        <div class="form-group" id="div_1" style="margin-left:0px">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </form>
+</div>
+<div th:include="include::footer"></div>
+<script>
+    var reg=/{index}/g;
+    var prefix = ctx + "rule";
+    var prefixFun = ctx + "functionRouteTemple";
+    var prefixReturnResult = ctx + "returnResultTemple";
+    var layer;
+    var cnExpressName="cn_express";
+    function submitHandler(){
+        $("#div_2 .index").each(function (index,obj) {
+            var html=$(obj).html();
+            html=html.replace(reg,index);
+            $(obj).html(html);
+        });
+        $("#div_1 .index").each(function (index,obj) {
+            var html=$(obj).html();
+            html=html.replace(reg,index);
+            $(obj).html(html);
+        });
+        $.operate.save(prefix + "/doAdd", $('#form-rule-add').serialize());
+    }
+    layui.use(['table','jquery','form','layer','element'], function(){
+        var table = layui.table //表格
+            ,$ = layui.jquery //jquery
+            ,element = layui.element //element
+            ,form=layui.form;
+            layer = layui.layer //弹层
+        ;
+
+    });
+    function  addFunRule(routeCode,obj) {
+        var options={
+            url: prefixFun+"/findFunTemple/"+routeCode+""
+            ,title:"函数"
+            ,callBack:function (index, layero) {
+                var iframeWin = layero.find('iframe')[0];
+                var funTempleMap=iframeWin.contentWindow.submitHandler();
+                funTempleRefCreate(funTempleMap);
+                layer.close(index); //再执行关闭
+                return true;
+            }
+        };
+        $.modal.openOptions(options);
+
+    }
+    function funTempleRefCreate(funTempleMap){
+        var div2=  $("#div_2");
+        var paramMap=  funTempleMap['paramMap'];
+        var div= $('<div class="form-group index" ></div>');
+
+        var funParamInde=0;
+        $.each(paramMap,function (key,obj) {
+
+            var inputKey=$('<input type="hidden"  />');
+            $(inputKey).attr("name","funRouAggRequet[{index}].param["+funParamInde+"].key");
+            $(inputKey).val(obj.name);
+
+            var inputVal=$('<input type="hidden"  />');
+            $(inputVal).attr("name","funRouAggRequet[{index}].param["+funParamInde+"].value");
+            $(inputVal).val(obj.value);
+
+            $(div).append(inputVal).append(inputKey);
+            funParamInde++;
+
+        });
+
+        var inputCode=$('<input type="hidden"  />');
+        $(inputCode).attr("name","funRouAggRequet[{index}].funTempleCode");
+        $(inputCode).val(funTempleMap['funTempleCode']);
+        $(div).append(inputCode);
+
+        var inputCnExpress=$('<input type="hidden"  />');
+        $(inputCnExpress).attr("name","funRouAggRequet[{index}].html");
+        $(inputCnExpress).val(funTempleMap[cnExpressName].value);
+        $(div).append(inputCnExpress);
+
+        var lab=$('<label class="col-sm-8  "></label>');
+        $(lab).html(funTempleMap[cnExpressName].value);
+        var a= $('<a class="btn btn-primary btn-rounded col-sm-1" onclick="javascript:$(this).parent().remove();">删除</a>');
+        $(div).append(lab).append(a);
+
+        $(div2).append(div);
+    }
+
+    function  addReturnResult(obj) {
+        var type=$("#successActionType").find("option:selected").val();
+        var options={
+            url: prefixReturnResult+"/findResultRuleTemple/type/"+type+""
+            ,title:"返回结果"
+            ,callBack:function (index, layero) {
+                var iframeWin = layero.find('iframe')[0];
+                var returnTempleMap=iframeWin.contentWindow.submitHandler();
+                resultRuleTempleRefCreate(returnTempleMap);
+                layer.close(index); //再执行关闭
+                return true;
+            }
+        };
+        $.modal.openOptions(options);
+
+    }
+    function resultRuleTempleRefCreate(returnTempleMap){
+        var div1=  $("#div_1");
+        var paramMap=  returnTempleMap['paramMap'];
+        var div= $('<div class="form-group index" ></div>');
+
+            var inputVal=$('<input type="hidden"  />');
+            $(inputVal).attr("name","returnResultAggRequet[{index}].value");
+            $(inputVal).val(paramMap["returnValue"].value);
+            $(div).append(inputVal);
+
+        var inputCode=$('<input type="hidden"  />');
+        $(inputCode).attr("name","returnResultAggRequet[{index}].returnTempleCode");
+        $(inputCode).val(returnTempleMap['returnTempleCode']);
+        $(div).append(inputCode);
+
+        var inputCnExpress=$('<input type="hidden"  />');
+        $(inputCnExpress).attr("name","ReturnResultAggRequet[{index}].text");
+        $(inputCnExpress).val(returnTempleMap[cnExpressName].value);
+        $(div).append(inputCnExpress);
+
+        var lab=$('<label class="col-sm-8  "></label>');
+        $(lab).html(returnTempleMap[cnExpressName].value);
+        var a= $('<a class="btn btn-primary btn-rounded col-sm-1" onclick="javascript:$(this).parent().remove();">删除</a>');
+        $(div).append(lab).append(a);
+
+        $(div1).append(div);
+    }
+
+
+    /*新增树*/
+    function selectMenuTree() {
+        var treeId = $("#treeId").val();
+        //	var menuId = treeId > 0 ? treeId : 1;
+        var url = prefix + "/selectTree/" + treeId;
+        var options = {
+            title: '规则选择',
+            width: "380",
+            url: url,
+            callBack: doTreeSubmit
+        };
+        $.modal.openOptions(options);
+    }
+
+    function doTreeSubmit(index, layero){
+        var body = layer.getChildFrame('body', index);
+        $("#treeId").val(body.find('#treeId').val());
+        $("#treeName").val(body.find('#treeName').val());
+        layer.close(index);
+    }
+</script>
+</body>
+</html>

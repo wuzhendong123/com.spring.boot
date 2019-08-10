@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="white-bg">
+<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+    <form class="form-horizontal m" id="form-add" >
+        <div class="form-group">
+            <label class="col-sm-3 control-label ">模板名称：</label>
+            <div class="col-sm-8">
+                <div class="input-group">
+                    <input class="form-control" type="text" id="name" name="name">
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-3 control-label ">html内容：</label>
+            <div class="col-sm-8">
+                <textarea class="form-control"  rows="5" name="html" placeholder="请输入文本" ></textarea>
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label class="col-sm-3 control-label ">中文内容提示：</label>
+            <div class="col-sm-8">
+                <div class="input-group">
+                    <input class="form-control" type="text" id="cnExpress" name="cnExpress">
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-3 control-label ">类型：</label>
+            <div class="col-sm-8">
+                <select  class="form-control" name="type">
+                    <option th:each="dict : ${@dict.getType('sys_action_type')}"
+                            th:value="${dict.dictValue}"
+                            th:text="${dict.dictLabel}" >类型</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label ">状态：</label>
+            <div class="col-sm-8">
+                <select  class="form-control" name="status">
+                    <option th:each="dict : ${@dict.getType('sys_status_type')}"
+                            th:value="${dict.dictValue}"
+                            th:text="${dict.dictLabel}" >状态</option>
+                </select>
+            </div>
+        </div>
+    </form>
+</div>
+<div th:include="include::footer"></div>
+<script>
+    var prefix = ctx + "returnResultTemple";
+
+    function submitHandler(){
+        $.operate.save(prefix + "/doAdd", $('#form-add').serialize());
+    }
+
+</script>
+</body>
+</html>

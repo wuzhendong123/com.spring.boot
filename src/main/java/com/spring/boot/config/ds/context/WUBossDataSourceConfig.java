@@ -5,7 +5,6 @@ import javax.sql.DataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceBuilder;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -34,7 +33,9 @@ public class WUBossDataSourceConfig {
     @ConfigurationProperties(prefix = "c3p0")
     public DataSource bossDataSource()
     {
-        return DataSourceBuilder.create().type(com.mchange.v2.c3p0.ComboPooledDataSource.class).build();
+        com.mchange.v2.c3p0.ComboPooledDataSource cds=new  com.mchange.v2.c3p0.ComboPooledDataSource();
+        return cds;
+//        return DataSourceBuilder.create().type(com.mchange.v2.c3p0.ComboPooledDataSource.class).build();
     }
    
     @Bean

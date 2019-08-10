@@ -25,10 +25,10 @@ public class WebMVCViewConfig {
 		InternalResourceViewResolver defaultViewResolver=new InternalResourceViewResolver();
 		defaultViewResolver.setPrefix("/WEB-INF/jsp/");
 		defaultViewResolver.setSuffix(".jsp");
-		defaultViewResolver.setViewNames("index3"); //对视图名称匹配不匹配进行下一个视图解析器
-		defaultViewResolver.setViewClass(InternalResourceView.class);
+//		defaultViewResolver.setViewNames("index3"); //对视图名称进行匹配不,匹配进行下一个视图解析器
+//		defaultViewResolver.setViewClass(InternalResourceView.class);
 //		defaultViewResolver.setv
-		defaultViewResolver.setOrder(100);
+		//defaultViewResolver.setOrder(00);
 		return defaultViewResolver;
 	}
 }

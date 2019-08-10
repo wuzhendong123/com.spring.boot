@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+
+<div class="container-div">
+    <div class="row">
+        <div class="col-sm-12 search-collapse">
+            <form id="route_form" class="form-horizontal m">
+                <div class="form-group">
+                    <div class="form-group">
+                        <div class="col-sm-5">
+                            <div class="layui-upload">
+                                <button type="button" class="layui-btn layui-btn-normal upload_file" id="upload_file_1" index="1">选择文件</button>
+                                <button type="button" class="layui-btn upload_btn" id="upload_btn_1">开始上传</button>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="input-group">
+                                <input class="form-control" type="text" id="upload_batch_1"  placeholder="文件批次号">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="form-group">
+                        <button type="button" class="layui-btn"  onclick="add()">添加上传</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+
+
+</div>
+
+
+<div th:include="include :: footer"></div>
+<script type="text/html" id="templeTool">
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="list">列表</a>
+    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+<script th:inline="javascript">
+    var prefix = ctx + "test";
+    var tableM,tableOptions,upload;
+    layui.use(['table','jquery','form','layer','upload'], function(){
+        var table = layui.table //表格
+            ,layer = layui.layer //弹层
+            ,$ = layui.jquery //jquery
+            ,form=layui.form;
+        ;
+        upload = layui.upload;
+
+        $(".upload_file").each(function (index,obj) {
+           // alert(index);
+            var index=$(obj).attr("index");
+            var file=$("#upload_file_"+index);
+            var btn=$("#upload_btn_"+index);
+            var data=$("#upload_batch_"+index);
+            upload.render({
+                elem: file
+                ,url: prefix+'/upload/'
+                ,auto: false
+                ,accept:'file'
+                ,acceptMime:'file/txt'
+                //,multiple: true
+                ,data:{
+                    batchNo:function (){
+                       return $(data).val();
+                    }
+                }
+                ,bindAction: btn
+                ,done: function(res){
+                    console.log(res)
+                }
+            });
+        });
+
+
+    });
+
+
+function upload(){
+    //选完文件后不自动上传
+    upload.render({
+        elem: '#test8'
+        ,url: prefix+'/upload/'
+        ,auto: false
+        ,accept:'file'
+        ,acceptMime:'file/txt'
+        //,multiple: true
+        ,data:{
+            batchno:function (){
+
+            }
+            }
+        ,bindAction: '#test9'
+        ,done: function(res){
+            console.log(res)
+        }
+    });
+}
+    // function add(){
+    //     var div=' <div class="form-group">\n' +
+    //         '                    <div class="layui-upload">\n' +
+    //         '                        <button type="button" class="layui-btn layui-btn-normal" id="test8">选择文件</button>\n' +
+    //         '                        <button type="button" class="layui-btn" id="test9">开始上传</button>\n' +
+    //         '                    </div>\n' +
+    //         '                </div> ';
+    //
+    //         $("#route_form").append(div);
+    // }
+</script>
+
+</body>
+
+
+</html>

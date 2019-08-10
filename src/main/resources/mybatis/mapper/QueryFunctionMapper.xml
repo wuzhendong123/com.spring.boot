@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.boot.mapper.QueryFunctionMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.spring.boot.entity.QueryFunction">
+    <result column="code" property="code" />
+     <result column="update_time" property="updateTime" />
+    <result column="create_time" property="createTime" />
+    <result column="optimistic" property="optimistic" />
+        <result column="name" property="name" />
+        <result column="express" property="express" />
+        <result column="type" property="type" />
+        <result column="status" property="status" />
+        <result column="data_version" property="dataVersion" />
+        <result column="query_name" property="queryName" />
+        <result column="result_name" property="resultName" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+    code,
+    create_time ,
+    update_time,
+    optimistic,
+                    name        ,
+                    express        ,
+                    type        ,
+                    status        ,
+                data_version        ,
+                query_name        ,
+                result_name
+    </sql>
+    <select id="selectPageByQueryFunction" resultMap="BaseResultMap">
+        select  <include refid="Base_Column_List"/> from query_function
+        <where>
+            <if test="name != null and name != ''">
+                AND name like concat('%', #{name}, '%')
+            </if>
+            <if test="status != null and status != ''">
+                AND status = #{status}
+            </if>
+        </where>
+    </select>
+
+</mapper>

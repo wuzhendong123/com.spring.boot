@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="white-bg">
+	<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+		<form class="form-horizontal m div_0" id="form-edit" th:object="${funParamHtmlRef}">
+			<input name="funParam[0].code"   type="hidden" th:value="${funParamHtmlRef.code}"   />
+			<div class="form-group">
+				<label class="col-sm-3 control-label">参数key：</label>
+				<div class="col-sm-8">
+					<input class="form-control" type="text" name="funParam[0].paramKey" id="name" th:value="${funParamHtmlRef.paramKey}" readonly>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">原有内容：</label>
+				<div class="col-sm-8">
+					<textarea class="form-control" rows="3" name="funParam[0].html" placeholder="请输入文本"  th:utext="${funParamHtmlRef.html}" readonly>请输入文本</textarea>
+				</div>
+			</div>
+			<div class="form-group" >
+				<label class="col-sm-3 control-label " >内容表达式:</label>
+				<div class="col-sm-8">
+					<div class="input-group">
+						<input class="form-control" type="text"  name="funParam[0].paramExp">
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label ">组件类型：</label>
+				<div class="col-sm-8">
+					<select  class="form-control" name="funParam[0].paramHtmlCode" onchange="paThSelect(0,this,'funParam[0]')">
+						<option th:each="paTm : ${@paHtTmService.findAll()}"
+								th:value="${paTm.code}"
+								th:text="${paTm.name}" >组件类型</option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">状态：</label>
+				<div class="col-sm-8">
+					<div class="radio-box" th:each="dict : ${@dict.getType('sys_status_type')}">
+						<input type="radio" th:id="${dict.code}"  th:value="${dict.dictValue}" th:value="${funParamHtmlRef.status}" name="'funParam[0].status'">
+						<label th:for="${dict.code}" th:text="${dict.dictLabel}"></label>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+	<div th:include="include::footer"></div>
+	<script th:inline="javascript">
+        var prefix = ctx + "funParamHtmlRef";
+        var paHtTms=[[${@paHtTmService.findAll()}]];
+        
+        function submitHandler() {
+	            $.operate.save(prefix + "/doEdit", $('#form-edit').serialize());
+	    }
+
+        function paThSelect(index,obj,namePre){
+            var val=$(obj).val();
+            var pa=paHtTmsEach(paHtTms,val);
+            $(".div_"+index).find(".html_append").remove();
+            if(pa!=null){
+                var htmlPas=pa.htmlParam;
+                $.each(JSON.parse(htmlPas), function(i, htmlPa) {
+                    var div=$('<div class="form-group html_append" ></div>');
+                    var rowKey='<label class="col-sm-3 control-label"><input class="form-control" type="hidden" name="'+namePre+'.paramMapQuery['+i+'].key"  value="'+htmlPa.key+'" >'+htmlPa.key+'</label>';
+                    var rowValue='<div class="col-sm-4"> <input class="form-control" type="text" name="'+namePre+'.paramMapQuery['+i+'].value"  > </div>';
+                    div.append(rowKey).append(rowValue);
+                    $(".div_"+index).append(div);
+                });
+
+            }
+
+        }
+        function paHtTmsEach(paHtTms,val){
+            var pa;
+            $.each(paHtTms, function(index, paHtTm) {
+                if (paHtTm.code == val) {
+                    pa=paHtTm;
+                    return true;
+                }
+            });
+            return pa;
+        }
+
+    </script>
+</body>
+</html>

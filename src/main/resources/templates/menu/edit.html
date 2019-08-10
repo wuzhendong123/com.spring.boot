@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="white-bg">
+	<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+		<form class="form-horizontal m" id="form-menu-edit" th:object="${menu}">
+			<input name="code"   type="hidden" th:field="*{code}"   />
+			<input name="optimistic"   type="hidden" th:field="*{optimistic}"   />
+			<input id="treeId" name="parentCode" type="hidden" th:field="*{parentCode}" />
+			<div class="form-group">
+				<label class="col-sm-3 control-label ">上级菜单：</label>
+				<div class="col-sm-8">
+					<input class="form-control" type="text" onclick="selectMenuTree()" id="treeName" readonly="true" th:value="${menuParent.name == null ? '无' : menuParent.name}"/>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-sm-3 control-label">菜单名称：</label>
+				<div class="col-sm-8">
+					<input class="form-control" type="text" name="menuName" id="menuName" th:field="*{name}">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">请求地址：</label>
+				<div class="col-sm-8">
+					<input id="url" name="url" class="form-control" type="text" th:field="*{url}">
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-sm-3 control-label">图标：</label>
+				<div class="col-sm-8">
+					<input id="icon" name="icon" class="form-control" type="text" placeholder="选择图标" th:field="*{icon}">
+                    <div class="ms-parent" style="width: 100%;">
+                        <div class="icon-drop animated flipInX" style="display: none;max-height:200px;overflow-y:auto">
+                            <div data-th-include="@{menu/icon}"></div>
+                        </div>
+                    </div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">菜单状态：</label>
+				<div class="col-sm-8">
+					<div class="radio-box" th:each="dict : ${@dict.getType('sys_status_type')}">
+						<input type="radio" th:id="${dict.code}" name="visible" th:value="${dict.dictValue}" th:field="*{status}">
+						<label th:for="${dict.code}" th:text="${dict.dictLabel}"></label>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+	<div th:include="include::footer"></div>
+	 <script>
+        var prefix = ctx + "menu";
+
+        $(function() {
+            var menuType = $('input[name="menuType"]:checked').val();
+            menuVisible(menuType);
+        });
+
+
+        
+        function submitHandler() {
+	        if ($.validate.form()) {
+	            $.operate.save(prefix + "/edit", $('#form-menu-edit').serialize());
+	        }
+	    }
+
+       /* $(function() {
+            $("input[name='icon']").focus(function() {
+                $(".icon-drop").show();
+            });
+            $("#form-menu-edit").click(function(event) {
+                var obj = event.srcElement || event.target;
+                if (!$(obj).is("input[name='icon']")) {
+                    $(".icon-drop").hide();
+                }
+            });
+            $(".icon-drop").find(".ico-list i").on("click",
+            function() {
+                $('#icon').val($(this).attr('class'));
+            });
+            $('input').on('ifChecked',
+            function(event) {
+                var menuType = $(event.target).val();
+                menuVisible(menuType);
+            });
+        });*/
+
+       /* function menuVisible(menuType) {
+            if (menuType == "M") {
+                $("#url").parents(".form-group").hide();
+                $("#perms").parents(".form-group").hide();
+                $("#icon").parents(".form-group").show();
+            } else if (menuType == "C") {
+                $("#url").parents(".form-group").show();
+                $("#perms").parents(".form-group").show();
+                $("#icon").parents(".form-group").hide();
+            } else if (menuType == "F") {
+                $("#url").parents(".form-group").hide();
+                $("#perms").parents(".form-group").show();
+                $("#icon").parents(".form-group").hide();
+            }
+        }
+*/
+
+
+        function selectMenuTree() {
+        	var menuId = $("#treeId").val();
+        	if(menuId !=null&& menuId!='') {
+        		var url = prefix + "/selectMenuTree/" + menuId;
+        		var options = {
+       				title: '菜单选择',
+       				width: "380",
+       				url: url,
+       				callBack: doSubmit
+       			};
+       			$.modal.openOptions(options);
+        	} else {
+        		$.modal.alertError("主菜单不能选择");
+        	}
+		}
+		
+		function doSubmit(index, layero){
+			var body = layer.getChildFrame('body', index);
+   			$("#treeId").val(body.find('#treeId').val());
+   			$("#treeName").val(body.find('#treeName').val());
+   			layer.close(index);
+		}
+    </script>
+</body>
+</html>

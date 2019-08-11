@@ -1,6 +1,6 @@
 package com.spring.boot.util;
 
-import com.ruoyi.common.core.text.StrFormatter;
+import com.spring.boot.config.text.StrFormatter;
 
 import java.util.Collection;
 import java.util.Map;
@@ -10,7 +10,7 @@ import java.util.Map;
  * 
  * @author ruoyi
  */
-public class StringUtils extends org.apache.commons.lang3.StringUtils
+public class StringUtils // extends org.apache.commons.lang3.StringUtils
 {
     /** 空字符串 */
     private static final String NULLSTR = "";

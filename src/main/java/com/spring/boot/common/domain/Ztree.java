@@ -14,6 +14,8 @@ public class Ztree implements Serializable
     /** 节点ID */
     private String id;
 
+
+
     /** 节点父ID */
     private String pId;
 

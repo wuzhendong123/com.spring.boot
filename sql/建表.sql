@@ -11,4 +11,4 @@ CREATE TABLE `dict_type_history` (
   `update_time` datetime DEFAULT NULL COMMENT '更新时间',
   `remark` varchar(500) DEFAULT '' COMMENT '备注',
   PRIMARY KEY (`code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='字典类型表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='字典类型表历史';

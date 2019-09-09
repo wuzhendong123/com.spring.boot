@@ -1,6 +1,7 @@
 package com.spring.boot.web;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.spring.boot.entity.Operator;
@@ -25,7 +26,7 @@ public class LoginController {
 	}*/
 
 	@RequestMapping("/login")
-	public String login(@RequestParam("name") String name,@RequestParam("passWord")String passWord,HttpServletRequest httpRequest) {
+	public String login(@RequestParam("name") String name, @RequestParam("passWord")String passWord, HttpServletRequest httpRequest, HttpServletResponse response) {
 		// 如果是Ajax请求，返回Json字符串。
 		if (ServletUtils.isAjaxRequest(httpRequest))
 		{

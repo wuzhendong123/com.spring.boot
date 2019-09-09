@@ -3,10 +3,7 @@ package com.spring.boot.entity;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.activerecord.Model;
 import com.baomidou.mybatisplus.annotations.TableName;
-import com.spring.boot.config.ds.context.anno.History;
 import com.spring.boot.entity.base.BaseEntity;
-
-import java.io.Serializable;
 
 /**
  * <p>
@@ -14,11 +11,10 @@ import java.io.Serializable;
  * </p>
  *
  * @author zhendong.wu
- * @since 2019-03-26
+ * @since 2019-09-09
  */
-@TableName("dict_type")
-@History(entity = DictTypeHistory.class)
-public class DictType extends BaseEntity<DictType> {
+@TableName("dict_type_history")
+public class DictTypeHistory extends BaseEntity<DictTypeHistory> {
 
     private static final long serialVersionUID = 1L;
 
@@ -103,7 +99,7 @@ public class DictType extends BaseEntity<DictType> {
 
     @Override
     public String toString() {
-        return "DictType{" +
+        return "DictTypeHistory{" +
         "dictName=" + dictName +
         ", dictType=" + dictType +
         ", status=" + status +

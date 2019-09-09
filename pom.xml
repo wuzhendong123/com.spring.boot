@@ -166,11 +166,6 @@
             <scope>test</scope>
 	    </dependency>
 
-      <dependency>
-          <groupId>com.wu</groupId>
-          <artifactId>wu.objectid</artifactId>
-          <version>1.0-SNAPSHOT</version>
-      </dependency>
 
 	    <dependency>
 		  <groupId>commons-lang</groupId>
@@ -178,11 +173,11 @@
 		  <version>2.6</version>
 		</dependency>
       <!-- 生成objectid MongoDB 生成模式-->
-      <dependency>
+<!--      <dependency>
           <groupId>com.wu</groupId>
           <artifactId>wu.objectid</artifactId>
           <version>1.0-SNAPSHOT</version>
-      </dependency>
+      </dependency>-->
       <dependency>
           <groupId>com.wu</groupId>
           <artifactId>c3p0Demo</artifactId>
@@ -304,7 +299,7 @@
       <dependency>
           <groupId>org.apache.commons</groupId>
           <artifactId>commons-lang3</artifactId>
-          <scope>3.8.1</scope>
+          <version>3.8.1</version>
       </dependency>
   </dependencies>
 

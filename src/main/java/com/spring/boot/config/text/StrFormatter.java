@@ -1,6 +1,7 @@
 package com.spring.boot.config.text;
 
-import com.ruoyi.common.utils.StringUtils;
+
+import com.spring.boot.util.StringUtils;
 
 /**
  * 字符串格式化

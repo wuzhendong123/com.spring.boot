@@ -22,4 +22,15 @@ public class DictTypeMapperTest extends BaseTest {
         dictType.setRemark("dddd");
         dictTypeMapper.insert(dictType);
     }
+
+    @Test
+    public void testUpdate(){
+        DictType dictType=dictTypeMapper.selectById(1171088144162938882L);
+        dictType.setRemark("dddd");
+        dictType.setStatus("11");
+        dictType.setCreateBy("dddd");
+        dictType.setUpdateBy("cccc");
+        //dictType.updateById();
+        dictTypeMapper.updateById(dictType);
+    }
 }

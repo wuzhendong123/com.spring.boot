@@ -353,4 +353,83 @@
 
     </plugins>
 </build>
+
+
+
+
+
+  <!--
+    // 配置war包
+   <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                    <encoding>UTF-8</encoding>
+                    <compilerArguments>
+                        <extdirs>${project.basedir}/lib</extdirs>
+                    </compilerArguments>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>2.6</version>
+                <configuration>
+                    <failOnMissingWebXml>false</failOnMissingWebXml>
+                </configuration>
+            </plugin>
+        </plugins>
+
+        <filters> &lt;!&ndash; 指定 filter &ndash;&gt;
+            <filter>src/main/conf/filters/application-${activatedProperties}.properties</filter>
+        </filters>
+        <resources>
+            <resource> &lt;!&ndash; spring.xml 应该在 src/main/resource 目录下 &ndash;&gt;
+                <directory>${basedir}/src/main/resources</directory>
+                <filtering>true</filtering> &lt;!&ndash; 是否使用过滤器 &ndash;&gt;
+                <includes>
+                    <include>**/*.xml</include>
+                    <include>**/*.properties</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>${basedir}/src/main/conf/${activatedProperties}</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+    </build>
+    <profiles>
+        &lt;!&ndash; 本地环境，默认激活 &ndash;&gt;
+        <profile>
+            <id>dev</id>
+            <properties>
+                <activatedProperties>dev</activatedProperties>
+            </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+        &lt;!&ndash; 测试环境 &ndash;&gt;
+        <profile>
+            <id>test</id>
+            <properties>
+                <activatedProperties>test</activatedProperties>
+            </properties>
+        </profile>
+        &lt;!&ndash; 生产环境 &ndash;&gt;
+        <profile>
+            <id>production</id>
+            <properties>
+                <activatedProperties>production</activatedProperties>
+            </properties>
+        </profile>
+    </profiles>-->
 </project>

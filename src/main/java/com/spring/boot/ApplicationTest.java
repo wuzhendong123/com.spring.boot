@@ -49,7 +49,7 @@ public class ApplicationTest {
 
 		// resources();
 
-
+		 System.out.println( App.class.getTypeName());
 	//	 DriverManager.getConnection()
 
 		 System.out.println( App.cc);

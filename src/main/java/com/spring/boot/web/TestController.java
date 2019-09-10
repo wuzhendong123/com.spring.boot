@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.CacheManager;
 import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StopWatch;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -171,6 +172,9 @@ private FunctionRuleJudgeMapper functionRuleJudgeMapper;
 	@Override
 	public void afterPropertiesSet() throws Exception {
 		orderPersistStateMachineHandler.addPersistStateChangeListener(orderPersistStateChangeListener);
+		StopWatch stopWatch = new StopWatch();
+		stopWatch.start();
+		stopWatch.stop();
 	}
 	public Logger log = LoggerFactory.getLogger(getClass());
 }

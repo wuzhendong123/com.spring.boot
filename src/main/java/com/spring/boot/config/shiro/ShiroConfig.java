@@ -120,7 +120,7 @@ public class ShiroConfig
 
 
         // 所有请求需要认证
-        filterChainDefinitionMap.put("/**", "user");
+       // filterChainDefinitionMap.put("/**", "user");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
 
 

@@ -1,6 +1,6 @@
 package com.spring.boot.util;
 
-import com.ruoyi.common.core.text.Convert;
+import com.spring.boot.config.text.Convert;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;

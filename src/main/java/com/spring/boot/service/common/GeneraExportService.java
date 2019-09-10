@@ -17,9 +17,13 @@ import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.BeanWrapperImpl;
+import org.springframework.beans.SimpleTypeConverter;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 
 import javax.servlet.http.HttpServletRequest;
 import java.beans.BeanInfo;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -36,10 +40,18 @@ public class GeneraExportService {
     private GeneralQueryService generalQueryService;
     private String funCode;
     private Workbook workbook;
+
+    /**
+     * 只针对此场景使用  非线程安全
+     */
+    static SimpleTypeConverter simpleTypeConverter=new SimpleTypeConverter();
     Col[] cols = null;
     Page page = new Page(1, 1000);
-
-
+    private static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    static{
+        simpleTypeConverter.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
+        simpleTypeConverter.registerCustomEditor(String.class,  new StringTrimmerEditor(true));
+    }
     public GeneraExportService(HttpServletRequest request, Object map, GeneralQueryService generalQueryService, String funCode) {
         //     this.request = request;
         this.map = map;

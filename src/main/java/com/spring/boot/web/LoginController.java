@@ -25,11 +25,11 @@ public class LoginController {
 	}*/
 
 	@RequestMapping("/login")
-	public String login(@RequestParam("name") String name,@RequestParam("passWord")String passWord,HttpServletRequest httpRequest) {
+	public String login(HttpServletRequest httpRequest) {
 		// 如果是Ajax请求，返回Json字符串。
 		if (ServletUtils.isAjaxRequest(httpRequest))
 		{
-			return ServletUtils.renderString(response, "{\"code\":\"1\",\"msg\":\"未登录或登录超时。请重新登录\"}");
+			return ServletUtils.renderString(ServletUtils.getResponse(), "{\"code\":\"1\",\"msg\":\"未登录或登录超时。请重新登录\"}");
 		}
 
 		return "login";

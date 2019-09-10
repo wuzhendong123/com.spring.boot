@@ -51,7 +51,7 @@ public class Application  {
 		 //RequestMappingHandlerAdapter
 		// org.springframework.boot.autoconfigure.web.DispatcherServletAutoConfiguration
 		 //RequestMappingHandlerMapping
-	//	 EndpointHandlerMapping
+	//	 EndpointHandlerMappingAspectJ
 	//	 ServletRegistrationBean
 		 // ReflectionUtils 反射类操作
 		// AopProxy

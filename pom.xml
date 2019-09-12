@@ -27,7 +27,14 @@
   <artifactId>spring-boot-starter-web</artifactId>
   <version>${project.build.springVersion}</version>
 </dependency>
-<dependency>
+      <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-aop -->
+      <dependency>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-starter-aop</artifactId>
+          <version>${project.build.springVersion}</version>
+      </dependency>
+
+      <dependency>
   <groupId>org.springframework.boot</groupId>
   <artifactId>spring-boot-starter-actuator</artifactId>
   <version>${project.build.springVersion}</version>

@@ -3,6 +3,7 @@ package com.spring.boot.config.ds.context;
 import com.baomidou.mybatisplus.entity.GlobalConfiguration;
 import com.baomidou.mybatisplus.plugins.OptimisticLockerInterceptor;
 import com.baomidou.mybatisplus.plugins.PaginationInterceptor;
+import com.spring.boot.config.ds.context.Interceptor.HistoryInterceptor;
 import com.spring.boot.entity.base.genid.ObjectIdGenId;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -35,6 +36,10 @@ public class MybatisPlusConfig {
 		public PaginationInterceptor paginationInterceptor() {
 			return new PaginationInterceptor();
 		}
+		@Bean
+			public HistoryInterceptor historyInterceptor() {
+		return new HistoryInterceptor();
+	}
 
 		@Bean
 		public OptimisticLockerInterceptor optimisticLockerInterceptor() {

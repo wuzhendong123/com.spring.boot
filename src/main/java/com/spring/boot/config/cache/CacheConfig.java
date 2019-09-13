@@ -7,7 +7,6 @@ import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CachingConfigurerSupport;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cache.interceptor.CacheErrorHandler;
-import org.springframework.cache.interceptor.CacheResolver;
 import org.springframework.cache.interceptor.KeyGenerator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -33,10 +32,12 @@ public class CacheConfig extends  CachingConfigurerSupport{
         /*CachingConfigurerSupport*/
 //        RedisCacheManager cacheManager=RedisCacheManager.create(redisConnectionFactory);
         RedisCacheManager cacheManager = new RedisCacheManager(redisTemplate,null,true);
-//        cacheManager.setDefaultExpiration(60*60); // 设置key-value超时时间
+        cacheManager.setDefaultExpiration(60*60); // 设置key-value超时时间
+        cacheManager.setUsePrefix(true);
        // cacheManager.
         return cacheManager;
     }
+
     @Bean
     public KeyGenerator wiselyKeyGenerator() {
         return new KeyGenerator() {
@@ -79,4 +80,11 @@ public class CacheConfig extends  CachingConfigurerSupport{
         };
     }
 
+    public static String key(Object...obj){
+        StringBuilder stringBuilder=new StringBuilder();
+        for(Object ob:obj){
+            stringBuilder.append(ob).append("_");
+        }
+        return  stringBuilder.toString();
+    }
 }

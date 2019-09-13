@@ -26,7 +26,7 @@ import java.util.Map;
  */
 public class GeneratorServiceEntity {
     public static void main(String[] args) {
-        String path="E:\\soft\\Generator";
+        String path="D:\\soft\\Generator";
         String packagePath="com.spring.boot";
         String packagePathStr="\\"+packagePath.replaceAll("\\.","\\\\");
 
@@ -80,7 +80,7 @@ public class GeneratorServiceEntity {
         strategy.setNaming(NamingStrategy.underline_to_camel);
         // 需要生成的表
         strategy.setInclude(
-                new String[] { "sys_operator_role_ref","sys_role","sys_role_permissions_ref","sys_role_menu_ref","sys_permissions"});
+                new String[] { "dict_type_history"});
         strategy.setSuperEntityClass("com.spring.boot.entity.base.BaseEntity");
         strategy.setSuperEntityColumns(new String[] { "code", "create_time","optimistic","update_time" }); //写的是数据库字段名
 

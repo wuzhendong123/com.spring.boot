@@ -66,9 +66,9 @@ public class FunRouteMethod {
     private int getRouteCodeIndex(FunRouteHandlerMethod funRouteHandlerMethod) {
         MethodParameter[] methodParameters= funRouteHandlerMethod.getParameters();
         for(int i=0;i<methodParameters.length;i++){
-           boolean result= AnnotatedElementUtils.isAnnotated(methodParameters[i].getParameter(),RouteParam.class);
-           if(result){
-               routeCodeAn=AnnotatedElementUtils.getMergedAnnotation(methodParameters[i].getParameter(),RouteParam.class);
+            RouteParam routeParam=  methodParameters[i].getParameterAnnotation(RouteParam.class);
+           if(routeParam!=null){
+               routeCodeAn=routeParam;
             return i;
            }
         }

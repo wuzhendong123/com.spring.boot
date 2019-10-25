@@ -25,32 +25,28 @@ public class MethodParameter {
     private volatile Type genericParameterType;
     private volatile Annotation[] parameterAnnotations;
     private volatile String parameterName;
-    private volatile Parameter parameter;
 
     public MethodParameter(Method method, int parameterIndex) {
         this((Method)method, parameterIndex, 1);
     }
 
     public MethodParameter(Method method, int parameterIndex, int nestingLevel) {
-        this.nestingLevel = 1;
         Assert.notNull(method, "Method must not be null");
         this.method = method;
         this.parameterIndex = parameterIndex;
         this.nestingLevel = nestingLevel;
         this.parameterAnnotations=getParameterAnnotations();
-        this.parameter=method.getParameters()[parameterIndex];
-        this.parameterName=paramNameResolver(parameter);
+        this.parameterName=paramNameResolver(parameterAnnotations);
     }
 
-    private String paramNameResolver(Parameter parameter) {
-        String name=null;
-         name=parameter.getName();
-          boolean result=  AnnotatedElementUtils.isAnnotated(parameter,FunRouteParam.class);
-          if(result){
-              FunRouteParam funRouteParam=AnnotatedElementUtils.getMergedAnnotation(parameter,FunRouteParam.class);
-              name= funRouteParam.value();
-          }
-          return name;
+
+    private String paramNameResolver(Annotation[] parameterAnnotations) {
+        FunRouteParam funRouteParam=(FunRouteParam)getParameterAnnotation(FunRouteParam.class);
+        if(funRouteParam!=null){
+            return funRouteParam.value();
+        }else{
+            throw new RuntimeException(String.format("method index [%s] FunRouteParam not found", method.getName()));
+        }
 
     }
 
@@ -214,13 +210,7 @@ public class MethodParameter {
         return annotations;
     }
 
-    public Parameter getParameter() {
-        return parameter;
-    }
 
-    public void setParameter(Parameter parameter) {
-        this.parameter = parameter;
-    }
 
     public String toString() {
         return (this.method != null ? "method '" + this.method.getName() + "'" : "constructor") + " parameter " + this.parameterIndex;

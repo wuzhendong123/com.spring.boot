@@ -57,7 +57,7 @@
         ;
         tableOptions={
             elem: '#route_table'
-            ,height: 312
+            ,height: 412
             ,title:"路由数据"
             ,url: prefix+'/list' //数据接口
             ,updateUrl:prefix+'/edit/{id}'
@@ -79,8 +79,8 @@
 
             ,cols: [[ //表头
                 {type: 'checkbox', fixed: 'left'}
-                ,{field: 'code', title: '编号'}
-                ,{field: 'name', title: '模板名称',  sort: true, fixed: 'left'}
+                ,{field: 'code', title: '模板编号'}
+                ,{field: 'name', title: '模板名称',  sort: true}
                 ,{field: 'createTime', title: '创建时间', sort: true}
                 ,{field: 'status', title: '状态', sort: true,templet:function (obj) {
                         return $.table.selectDictLabel(datas, obj.status);

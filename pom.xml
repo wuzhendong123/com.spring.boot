@@ -308,6 +308,13 @@
           <artifactId>commons-lang3</artifactId>
           <version>3.8.1</version>
       </dependency>
+
+<!--seleniumhq -->
+    <!--  <dependency>
+          <groupId>org.seleniumhq.selenium</groupId>
+          <artifactId>selenium-java</artifactId>
+          <version>2.37.1</version>
+      </dependency>-->
   </dependencies>
 
 

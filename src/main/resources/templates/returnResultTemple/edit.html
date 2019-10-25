@@ -4,12 +4,13 @@
 <head th:include="include :: header"></head>
 <body class="white-bg">
 <div class="wrapper wrapper-content animated fadeInRight ibox-content">
-    <form class="form-horizontal m" id="form-add" >
+    <form class="form-horizontal m" id="form-edit" >
+        <input name="code"   type="hidden" th:value="${returnResultTemple.code}"   />
         <div class="form-group">
             <label class="col-sm-3 control-label ">模板名称：</label>
             <div class="col-sm-8">
                 <div class="input-group">
-                    <input class="form-control" type="text" id="name" name="name">
+                    <input class="form-control" type="text" id="name" name="name"  th:value="${returnResultTemple.name}">
                 </div>
             </div>
         </div>
@@ -17,7 +18,7 @@
         <div class="form-group">
             <label class="col-sm-3 control-label ">html内容：</label>
             <div class="col-sm-8">
-                <textarea class="form-control"  rows="10" name="html" placeholder="请输入文本" ></textarea>
+                <textarea class="form-control"  rows="10"  name="html" placeholder="请输入文本" th:utext="${returnResultTemple.html}" ></textarea>
             </div>
         </div>
 
@@ -26,7 +27,7 @@
             <label class="col-sm-3 control-label ">中文内容提示：</label>
             <div class="col-sm-8">
                 <div class="input-group">
-                    <input class="form-control" type="text" id="cnExpress" name="cnExpress">
+                    <input class="form-control" type="text" id="cnExpress" name="cnExpress"  th:value="${returnResultTemple.cnExpress}" >
                 </div>
             </div>
         </div>
@@ -36,6 +37,7 @@
             <div class="col-sm-8">
                 <select  class="form-control" name="type">
                     <option th:each="dict : ${@dict.getType('sys_action_type')}"
+                            th:selected="${dict.dictValue  eq returnResultTemple.type}"
                             th:value="${dict.dictValue}"
                             th:text="${dict.dictLabel}" >类型</option>
                 </select>
@@ -46,6 +48,7 @@
             <div class="col-sm-8">
                 <select  class="form-control" name="status">
                     <option th:each="dict : ${@dict.getType('sys_status_type')}"
+                            th:selected="${dict.dictValue  eq returnResultTemple.status}"
                             th:value="${dict.dictValue}"
                             th:text="${dict.dictLabel}" >状态</option>
                 </select>
@@ -58,7 +61,7 @@
     var prefix = ctx + "returnResultTemple";
 
     function submitHandler(){
-        $.operate.save(prefix + "/doAdd", $('#form-add').serialize());
+        $.operate.save(prefix + "/doEdit", $('#form-edit').serialize());
     }
 
 </script>

@@ -4,8 +4,15 @@ package com.spring.boot.web;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.baomidou.mybatisplus.plugins.Page;
+import com.spring.boot.entity.FunctionRuleRef;
+import com.spring.boot.entity.ReturnResultRuleRef;
 import com.spring.boot.entity.ReturnResultTemple;
+import com.spring.boot.entity.Rule;
+import com.spring.boot.enums.StatusEnum;
+import com.spring.boot.query.request.FunctionRuleRefAggreRequest;
+import com.spring.boot.query.request.ReturnResultAggRequet;
 import com.spring.boot.service.IReturnResultTempleService;
+import com.spring.boot.util.BeanUtil;
 import com.spring.boot.web.respone.R;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -48,6 +55,21 @@ public class ReturnResultTempleController {
     public R doAdd(ReturnResultTemple returnResultTemple) {
         returnResultTempleService.insert(returnResultTemple);
     return R.ok();
+    }
+    @RequestMapping("/edit/{code}")
+    public ModelAndView edit(@PathVariable("code") String code) {
+        ModelAndView mav=new ModelAndView(prefix+"/edit");
+        ReturnResultTemple returnResultTemple= returnResultTempleService.selectById(code);
+        mav.addObject("returnResultTemple",returnResultTemple);
+        return mav;
+    }
+    @RequestMapping("/doEdit")
+    @ResponseBody
+    public R doEdit(ReturnResultTemple returnResultTemple){
+        ReturnResultTemple returnResultTempleDB=returnResultTempleService.selectById(returnResultTemple.getCode());
+        BeanUtil.copyPropertiesIgnoreNull(returnResultTemple,returnResultTempleDB);
+        returnResultTempleService.updateById(returnResultTempleDB);
+        return R.ok();
     }
 
 

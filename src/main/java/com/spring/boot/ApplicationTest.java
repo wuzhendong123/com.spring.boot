@@ -15,6 +15,8 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.PropertySources;
 import org.springframework.core.annotation.AnnotatedElementUtils;
 import org.springframework.core.annotation.AnnotationAttributes;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.core.io.support.PropertiesLoaderUtils;
 import org.springframework.core.type.AnnotationMetadata;
@@ -47,6 +49,15 @@ public class ApplicationTest {
 	 }
 	 public static void main(String[] args) throws Exception {
 
+		// Resource resource=  new ClassPathResource("classpath:/static/ruoyi.png".substring("classpath:".length()), Thread.currentThread().getContextClassLoader());
+		 Resource resource=  new ClassPathResource("classpath:/file1/index3.jsp".substring("classpath:".length()), Thread.currentThread().getContextClassLoader());
+
+		 //Resource resource=  new ClassPathResource("classpath:/templates/index.html".substring("classpath:".length()), Thread.currentThread().getContextClassLoader());
+		 try {
+			 System.out.println(resource.getInputStream());
+		 } catch (IOException e) {
+			 e.printStackTrace();
+		 }
 		// resources();
 
 		 System.out.println( App.class.getTypeName());

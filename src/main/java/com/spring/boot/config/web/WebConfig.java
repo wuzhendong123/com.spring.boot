@@ -5,12 +5,10 @@ import com.spring.boot.config.web.interceptor.ThreadTraceIdInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.core.Ordered;
 import org.springframework.format.FormatterRegistry;
 import org.springframework.web.servlet.HandlerExceptionResolver;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.springframework.web.servlet.config.annotation.PathMatchConfigurer;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.config.annotation.*;
 
 import java.util.List;
 
@@ -33,11 +31,12 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 		super.addInterceptors(registry);
 	}
 
-/*	@Override
+	@Override
 	public void addViewControllers(ViewControllerRegistry registry) {
 		registry.addViewController("/error").setViewName("error.html");
+		registry.addViewController("/").setViewName("index.html");
 		registry.setOrder(Ordered.HIGHEST_PRECEDENCE);
-	}*/
+	}
 
 	@Override
 	public void configureHandlerExceptionResolvers(List<HandlerExceptionResolver> exceptionResolvers) {

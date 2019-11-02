@@ -29,11 +29,11 @@ import ${superControllerClassPackage};
 @RequestMapping("#if(${package.ModuleName})/${package.ModuleName}#end/#if(${controllerMappingHyphenStyle})${controllerMappingHyphen}#else${table.entityPath}#end")
 public class ${table.controllerName} {
 @Autowired
-private ${table.serviceName} ${table.serviceImplName};
-private String prefix="${table.entityPath}";
+private ${table.serviceName} ${serviceLowName};
+private String prefix="${entityLow}";
 @RequestMapping(value = "/index")
 public  String index(){
-        return prefix+"/${table.entityPath}";
+        return prefix+"/${entityLow}";
         }
 @RequestMapping("/add")
 public String add()
@@ -44,7 +44,7 @@ public String add()
 @ResponseBody
 public R list(@RequestParam("page") int page,@RequestParam("limit") int limit, ${entity} obj){
         Page<${entity} > pagePg=new Page<>(page,limit);
-        pagePg= ${table.serviceImplName}.selectPageBy${entity}(pagePg,obj);
+        pagePg= ${serviceLowName}.selectPageBy${entity}(pagePg,obj);
         R r=R.okList(pagePg);
         return r;
         }
@@ -52,7 +52,7 @@ public R list(@RequestParam("page") int page,@RequestParam("limit") int limit, $
 @RequestMapping("/edit/{code}")
 public ModelAndView edit(@PathVariable("code") String code){
         ModelAndView mav=new ModelAndView(prefix+"/edit");
-    ${entity} entity=  ${table.serviceImplName}.selectById(code);
+    ${entity} entity=  ${serviceLowName}.selectById(code);
         mav.addObject("entity",entity);
         return mav;
         }
@@ -60,9 +60,17 @@ public ModelAndView edit(@PathVariable("code") String code){
 @RequestMapping(value = "/doEdit")
 @ResponseBody
 public R doEdit(${entity} entity){
-    ${entity} entityDB=${table.serviceImplName}.selectById(entity.getCode());
+    ${entity} entityDB=${serviceLowName}.selectById(entity.getCode());
         BeanUtil.copyPropertiesIgnoreNull(entity,entityDB);
-    ${table.serviceImplName}.updateById(entityDB);
+    ${serviceLowName}.updateById(entityDB);
+        R r = R.ok();
+        return r;
+
+        }
+@RequestMapping(value = "/doAdd")
+@ResponseBody
+public R doAdd(${entity} entity){
+    ${serviceLowName}.insert(entity);
         R r = R.ok();
         return r;
 

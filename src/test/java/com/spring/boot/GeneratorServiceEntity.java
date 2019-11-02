@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.generator.config.*;
 import com.baomidou.mybatisplus.generator.config.converts.MySqlTypeConvert;
 import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.baomidou.mybatisplus.generator.config.rules.DbColumnType;
+import com.spring.boot.auto.WuVelocityTemplateEngine;
 import org.junit.Test;
 
 import com.baomidou.mybatisplus.generator.AutoGenerator;
@@ -29,8 +30,9 @@ public class GeneratorServiceEntity {
         String path="D:\\soft\\Generator";
         String packagePath="com.spring.boot";
         String packagePathStr="\\"+packagePath.replaceAll("\\.","\\\\");
-
+        WuVelocityTemplateEngine wuVelocityTemplateEngine=new WuVelocityTemplateEngine();
         AutoGenerator mpg = new AutoGenerator();
+        mpg.setTemplateEngine(wuVelocityTemplateEngine);
         // 全局配置
         GlobalConfig gc = new GlobalConfig();
         gc.setOutputDir(path);
@@ -80,7 +82,7 @@ public class GeneratorServiceEntity {
         strategy.setNaming(NamingStrategy.underline_to_camel);
         // 需要生成的表
         strategy.setInclude(
-                new String[] { "dict_type_history"});
+                new String[] { "sys_role_permissions_ref"});
         strategy.setSuperEntityClass("com.spring.boot.entity.base.BaseEntity");
         strategy.setSuperEntityColumns(new String[] { "code", "create_time","optimistic","update_time" }); //写的是数据库字段名
 

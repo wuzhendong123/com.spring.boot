@@ -56,12 +56,21 @@ public class SysRoleController {
         return mav;
     }
 
+
     @RequestMapping(value = "/doEdit")
     @ResponseBody
     public R doEdit(SysRole entity){
         SysRole entityDB=sysRoleService.selectById(entity.getCode());
         BeanUtil.copyPropertiesIgnoreNull(entity,entityDB);
         sysRoleService.updateById(entityDB);
+        R r = R.ok();
+        return r;
+
+    }
+    @RequestMapping(value = "/doAdd")
+    @ResponseBody
+    public R doAdd(SysRole entity){
+        sysRoleService.insert(entity);
         R r = R.ok();
         return r;
 

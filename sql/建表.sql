@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50640
 File Encoding         : 65001
 
-Date: 2019-11-02 15:33:06
+Date: 2019-11-02 17:19:18
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -291,7 +291,7 @@ INSERT INTO `menu` VALUES ('uuu', null, '2019-01-27 17:59:22', '0', '总菜单',
 DROP TABLE IF EXISTS `operator`;
 CREATE TABLE `operator` (
   `name` varchar(30) DEFAULT NULL,
-  `pass_word` varchar(30) DEFAULT NULL,
+  `pass_word` varchar(60) DEFAULT NULL,
   `phone` varchar(30) DEFAULT NULL,
   `status` varchar(30) DEFAULT NULL COMMENT '操作员',
   `create_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
@@ -304,6 +304,7 @@ CREATE TABLE `operator` (
 -- ----------------------------
 -- Records of operator
 -- ----------------------------
+INSERT INTO `operator` VALUES ('admin', 'c466f189d277fc0e6702ec3fe5ea18d7', null, 'TRUE', '2019-11-02 02:39:02', '0', '0', '');
 
 -- ----------------------------
 -- Table structure for param_html_temple
@@ -458,112 +459,6 @@ INSERT INTO `rule` VALUES ('1124662535388172289', '测试规则3_1', 'TRUE', '7'
 INSERT INTO `rule` VALUES ('1124695238795874306', '测试规则1', 'TRUE', '2', '1124691489390137345', 'input', null, '1', null, '2019-05-04 23:20:15', null);
 INSERT INTO `rule` VALUES ('1124696877669830657', '测试规则1_1', 'TRUE', '0', '1124691489390137345', 'input', null, '1', '1124695238795874306', '2019-05-04 23:26:46', null);
 INSERT INTO `rule` VALUES ('1138485687524265986', '测试规则1_2', 'TRUE', '0', '1124691489390137345', 'input', null, '3', '1124696877669830657', '2019-06-12 00:38:35', null);
-
--- ----------------------------
--- Table structure for student
--- ----------------------------
-DROP TABLE IF EXISTS `student`;
-CREATE TABLE `student` (
-  `code` varchar(200) NOT NULL,
-  `optimistic` int(11) DEFAULT NULL,
-  `create_time` datetime DEFAULT NULL,
-  `addr` int(11) DEFAULT NULL COMMENT '地址',
-  `name` varchar(30) DEFAULT NULL,
-  `age` int(11) DEFAULT NULL,
-  PRIMARY KEY (`code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of student
--- ----------------------------
-INSERT INTO `student` VALUES ('0a05ad3243bf415e9d0d7ff7ccb21624', '0', '2018-09-08 23:03:56', null, 'xiaoxiaowu', null);
-INSERT INTO `student` VALUES ('0a93482297ac42e09bbb1e8aa97e1678', '0', '2019-01-06 18:03:34', null, 'xiaoxiaowu', null);
-INSERT INTO `student` VALUES ('0dec15b10fec49279961c214c060b463', '0', null, null, 'wu', null);
-INSERT INTO `student` VALUES ('1124d46a21f442dead526ad9a56dde14', '0', '2018-09-08 14:24:45', null, 'xiaoxiaowu', null);
-INSERT INTO `student` VALUES ('1135092415602921473', '0', '2019-06-02 15:54:56', null, 'xiaoxiaowu', null);
-INSERT INTO `student` VALUES ('1135101609945108481', '0', '2019-06-02 16:31:28', null, 'xiaoxiaowu', null);
-INSERT INTO `student` VALUES ('1135423694047387649', '0', '2019-06-03 13:51:18', null, 'xiaoxiaowu', null);
-INSERT INTO `student` VALUES ('115a4c1fa80649868e0955c8a1b1dce0', '0', '2018-09-26 15:33:39', null, 'wu', null);
-INSERT INTO `student` VALUES ('12742b1a1dcd4644ac9906151522399d', '0', '2018-09-26 16:01:00', null, 'wu', null);
-INSERT INTO `student` VALUES ('1656729a743e4089ab0163b62551eea3', '0', null, null, 'wu', null);
-INSERT INTO `student` VALUES ('1aa369665cdd4310a42e69ede8c5159a', '0', null, null, 'wu', null);
-INSERT INTO `student` VALUES ('2611e1ce6ee84e04a8e646fb5c274d99', '0', '2019-01-23 00:15:49', null, 'xiaoxiaowu', null);
-INSERT INTO `student` VALUES ('269833ecbe0347d0a94378b4106cd8c5', '0', '2018-09-08 12:03:43', null, 'xiaoxiaowu', null);
-INSERT INTO `student` VALUES ('300108c65c334857904a71d1f3e050e9', '0', null, null, 'wu', null);
-INSERT INTO `student` VALUES ('3e2ad0e3143743b7920bc8b7ac34616e', '0', '2018-09-08 14:42:45', null, 'xiaoxiaowu', null);
-INSERT INTO `student` VALUES ('45f2e0f44fd64a9d87fe7519fc3f7f80', '0', '2018-12-25 16:59:53', null, 'xiaoxiaowu', null);
-INSERT INTO `student` VALUES ('4c6f5c82191a4fafaa5215eb1f34a720', '0', '2018-11-13 13:46:02', null, 'wu', null);
-INSERT INTO `student` VALUES ('5091b09f0c9a4681be580c5450c31b06', '0', null, null, 'wu', null);
-INSERT INTO `student` VALUES ('51dc3577c36c47c9b9a631532d7616fb', '0', '2019-03-28 16:54:40', null, 'xiaoxiaowu', null);
-INSERT INTO `student` VALUES ('5613c07a00b348da85f30742cfbd5dda', '0', '2018-09-26 16:19:20', null, 'wu', null);
-INSERT INTO `student` VALUES ('5d724f471f0a45e3b33ad0be074d8d97', '0', null, null, 'wu', null);
-INSERT INTO `student` VALUES ('6493b69d02cc41f991600b5b07b1add5', '0', '2018-09-08 15:27:20', null, 'xiaoxiaowu', null);
-INSERT INTO `student` VALUES ('697a316f6e754351ad7bd8ccc800b519', '0', '2018-09-08 23:51:27', null, 'xiaoxiaowu', null);
-INSERT INTO `student` VALUES ('720d847aaa8244c9853c29224d29af0f', '0', '2018-09-08 14:27:34', null, 'xiaoxiaowu', null);
-INSERT INTO `student` VALUES ('8b3ffc67ee98437895eb1759aae3f2ab', '0', '2018-09-08 14:58:16', null, 'xiaoxiaowu', null);
-INSERT INTO `student` VALUES ('8c2e41a945e740c5ae9d0126b741ba3c', '0', null, null, 'wu', null);
-INSERT INTO `student` VALUES ('8e6e8bfb11b0433eb3aef0e1a4eb743a', '0', '2018-09-08 23:03:37', null, 'xiaoxiaowu', null);
-INSERT INTO `student` VALUES ('8ef4d008851c422baad6d5f23cce21d0', '0', '2018-09-08 14:05:33', null, 'xiaoxiaowu1', null);
-INSERT INTO `student` VALUES ('910c0717cc0f441ea569de60ac9bde4a', '0', '2018-12-25 16:36:12', null, 'xiaoxiaowu', null);
-INSERT INTO `student` VALUES ('98c7ab8a868b4ca696156fa6ecc8336b', '0', '2018-09-08 14:27:01', null, 'xiaoxiaowu', null);
-INSERT INTO `student` VALUES ('9b9bd95dee1142c6b08b9b03731409b8', '0', null, null, 'wu', null);
-INSERT INTO `student` VALUES ('9d35be265f79448a88f3f93c9794b6ae', '0', '2018-09-08 14:25:57', null, 'xiaoxiaowu', null);
-INSERT INTO `student` VALUES ('a2e08702e9ca4a67ad71405f8094efc4', '0', '2018-09-08 23:49:37', null, 'xiaoxiaowu', null);
-INSERT INTO `student` VALUES ('a609c8583cb84b698d1d9f1d96b18fb9', '0', '2018-09-08 15:27:20', null, 'xiaoxiaowu', null);
-INSERT INTO `student` VALUES ('a640baf032a1458098d96e11d9d58679', '0', '2018-09-08 22:32:23', null, 'xiaoxiaowu', null);
-INSERT INTO `student` VALUES ('aaaa', '0', null, null, 'www', null);
-INSERT INTO `student` VALUES ('ad5e8732bc6743648f92067fca6c6230', '0', '2018-09-08 14:27:24', null, 'xiaoxiaowu', null);
-INSERT INTO `student` VALUES ('af12ffea41ca4ec5988c53ef5ae5f6d1', '0', '2018-09-26 15:40:21', null, 'wu', null);
-INSERT INTO `student` VALUES ('BBXUVHS91FH0VX2XQKPG', '0', null, null, 'name1', '0');
-INSERT INTO `student` VALUES ('BBXV14S91FH86G55WXL0', '0', null, null, 'name1', '0');
-INSERT INTO `student` VALUES ('BBXV2CA91FH2UF2L6U70', '0', null, null, 'name1', '0');
-INSERT INTO `student` VALUES ('BBXV2CA91FH2UF2L6U7G', '0', null, null, 'name1', '0');
-INSERT INTO `student` VALUES ('BBXV2CJ91FH2UF2L6U80', '0', null, null, 'name1', '0');
-INSERT INTO `student` VALUES ('BBXV2CJ91FH2UF2L6U8G', '0', null, null, 'name1', '0');
-INSERT INTO `student` VALUES ('BBXV2CJ91FH2UF2L6U90', '0', null, null, 'name1', '0');
-INSERT INTO `student` VALUES ('BBXV2CJ91FH2UF2L6U9G', '0', null, null, 'name1', '0');
-INSERT INTO `student` VALUES ('BBXV2CJ91FH2UF2L6UA0', '0', null, null, 'name1', '0');
-INSERT INTO `student` VALUES ('BBXV2CS91FH2UF2L6UAG', '0', null, null, 'name1', '0');
-INSERT INTO `student` VALUES ('BBXV2CS91FH2UF2L6UB0', '0', null, null, 'name1', '0');
-INSERT INTO `student` VALUES ('BBXV2CS91FH2UF2L6UBG', '0', null, null, 'name1', '0');
-INSERT INTO `student` VALUES ('BBXV2CS91FH2UF2L6UC0', '0', null, null, 'name1', '0');
-INSERT INTO `student` VALUES ('BBXV2CS91FH2UF2L6UCG', '0', null, null, 'name1', '0');
-INSERT INTO `student` VALUES ('BBXV2CS91FH2UF2L6UD0', '0', null, null, 'name1', '0');
-INSERT INTO `student` VALUES ('BBXV2D291FH2UF2L6UDG', '0', null, null, 'name1', '0');
-INSERT INTO `student` VALUES ('BBXV2D291FH2UF2L6UE0', '0', null, null, 'name1', '0');
-INSERT INTO `student` VALUES ('BBXV2D291FH2UF2L6UEG', '0', null, null, 'name1', '0');
-INSERT INTO `student` VALUES ('BBXV2D291FH2UF2L6UF0', '0', null, null, 'name1', '0');
-INSERT INTO `student` VALUES ('BBXV2D291FH2UF2L6UFG', '0', null, null, 'name1', '0');
-INSERT INTO `student` VALUES ('BBXV2D291FH2UF2L6UG0', '0', null, null, 'name1', '0');
-INSERT INTO `student` VALUES ('BBXV2D291FH2UF2L6UGG', '0', null, null, 'name1', '0');
-INSERT INTO `student` VALUES ('BBXV2DA91FH2UF2L6UH0', '0', null, null, 'name1', '0');
-INSERT INTO `student` VALUES ('BBXV2DA91FH2UF2L6UHG', '0', null, null, 'name1', '0');
-INSERT INTO `student` VALUES ('BBXV2DA91FH2UF2L6UJ0', '0', null, null, 'name1', '0');
-INSERT INTO `student` VALUES ('BBXV2DA91FH2UF2L6UJG', '0', null, null, 'name1', '0');
-INSERT INTO `student` VALUES ('BBXV2DA91FH2UF2L6UK0', '0', null, null, 'name1', '0');
-INSERT INTO `student` VALUES ('BBXV2DA91FH2UF2L6UKG', '0', null, null, 'name1', '0');
-INSERT INTO `student` VALUES ('BBXV2DJ91FH2UF2L6UL0', '0', null, null, 'name1', '0');
-INSERT INTO `student` VALUES ('BBXV2DJ91FH2UF2L6ULG', '0', null, null, 'name1', '0');
-INSERT INTO `student` VALUES ('BBXV2DJ91FH2UF2L6UM0', '0', null, null, 'name1', '0');
-INSERT INTO `student` VALUES ('BBXV2DJ91FH2UF2L6UMG', '0', null, null, 'name1', '0');
-INSERT INTO `student` VALUES ('BBXV2DJ91FH2UF2L6UN0', '0', null, null, 'name1', '0');
-INSERT INTO `student` VALUES ('BBXV2DJ91FH2UF2L6UNG', '0', null, null, 'name1', '0');
-INSERT INTO `student` VALUES ('BBXV2DS91FH2UF2L6UP0', '0', null, null, 'name1', '0');
-INSERT INTO `student` VALUES ('BBXV2DS91FH2UF2L6UPG', '0', null, null, 'name1', '0');
-INSERT INTO `student` VALUES ('BBXV2DS91FH2UF2L6UQ0', '0', null, null, 'name1', '0');
-INSERT INTO `student` VALUES ('BBXV2DS91FH2UF2L6UQG', '0', null, null, 'name1', '0');
-INSERT INTO `student` VALUES ('BE56M7QG353LRS6M8KBG', '0', null, null, 'www', null);
-INSERT INTO `student` VALUES ('c62829446390471ea34af991f0ab75f3', '0', '2018-09-08 23:53:19', null, 'xiaoxiaowu', null);
-INSERT INTO `student` VALUES ('c711126f067f44f58310e0be0c842db1', '0', '2018-09-08 15:20:28', null, 'xiaoxiaowu', null);
-INSERT INTO `student` VALUES ('c7f0495003a3483eb200d172698c0d6f', '0', null, null, 'wu', null);
-INSERT INTO `student` VALUES ('c89e3cb5a61c44918b0169d3f5a15332', '0', '2019-01-23 00:07:00', null, 'xiaoxiaowu', null);
-INSERT INTO `student` VALUES ('d247c3719f2e4ef8b5cd5f8698178890', '0', '2019-03-28 16:44:26', null, 'xiaoxiaowu', null);
-INSERT INTO `student` VALUES ('decdb7812b924636940d21b01fcd7446', '0', '2018-09-02 00:56:22', null, 'wu', null);
-INSERT INTO `student` VALUES ('edf4081c0ad94fb590602ed13826b04f', '0', '2018-09-26 16:21:50', null, 'wu', null);
-INSERT INTO `student` VALUES ('ef985e8e4f90445abd39010e457cd134', '0', '2018-09-08 14:27:40', null, 'xiaoxiaowu', null);
-INSERT INTO `student` VALUES ('f30a75f0593a4069925576ef41554a86', '0', '2019-01-30 13:47:14', null, 'xiaoxiaoaa', null);
-INSERT INTO `student` VALUES ('f6f95eb133f34087a6f7bc1a3853f220', '0', '2019-03-28 16:51:26', null, 'xiaoxiaowu', null);
-INSERT INTO `student` VALUES ('fe131169483840ce8abb0052607c764b', '0', '2019-03-28 16:46:23', null, 'xiaoxiaowu', null);
 
 -- ----------------------------
 -- Table structure for sys_operator_role_ref

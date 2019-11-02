@@ -778,7 +778,7 @@ $.layout.defaults = {
 		,	Slide:				"鼠标停留自动展开"	// ThinkGem 汉化，默认Slide Open	
 		,	Pin:				"Pin"
 		,	Unpin:				"Un-Pin"
-		,	noRoomToOpen:		"Not enough room to show this panel."	// alert if user tries to open a pane that cannot
+		,	noRoomToOpen:		"Not enough room to show this panel."	// alert if operator tries to open a pane that cannot
 		,	minSizeWarning:		"Panel has reached its minimum size"	// displays in browser statusbar
 		,	maxSizeWarning:		"Panel has reached its maximum size"	// ditto
 		}
@@ -890,7 +890,7 @@ $.layout.optionsMap = {
  * In flat-format, subkeys are _currently_ separated with 2 underscores, like north__optName
  * Plugins may also call this method so they can transform their own data
  *
- * @param  {!Object}	hash			Data/options passed by user - may be a single level or nested levels
+ * @param  {!Object}	hash			Data/options passed by operator - may be a single level or nested levels
  * @param  {boolean=}	[addKeys=false]	Should the primary layout.options keys be added if they do not exist?
  * @return {Object}						Returns hash of minWidth & minHeight
  */
@@ -1519,7 +1519,7 @@ $.fn.layout = function (opts) {
 		// dragging has a 100ms delay set, so this delay must be >100
 		if (!el) // 1st call - mouseleave event
 			timer.set(name, function(){ onResizerLeave(evt, e); }, 200);
-		// if user is resizing, dragStop will reset everything, so skip it here
+		// if operator is resizing, dragStop will reset everything, so skip it here
 		else if (options.maskPanesEarly && !state.paneResizing) // 2nd call - by timer
 			hideMasks();
 	}
@@ -2020,13 +2020,13 @@ $.fn.layout = function (opts) {
 ,	initOptions = function () {
 		var data, d, pane, key, val, i, c, o;
 
-		// reprocess user's layout-options to have correct options sub-key structure
+		// reprocess operator's layout-options to have correct options sub-key structure
 		opts = $.layout.transformData( opts, true ); // panes = default subkey
 
 		// auto-rename old options for backward compatibility
 		opts = $.layout.backwardCompatibility.renameAllOptions( opts );
 
-		// if user-options has 'panes' key (pane-defaults), clean it...
+		// if operator-options has 'panes' key (pane-defaults), clean it...
 		if (!$.isEmptyObject(opts.panes)) {
 			// REMOVE any pane-defaults that MUST be set per-pane
 			data = $.layout.optionsMap.noDefault;
@@ -2933,7 +2933,7 @@ $.fn.layout = function (opts) {
 			isIframe = o.maskObjects && i==0;
 			el = document.createElement( isIframe ? "iframe" : "div" );
 			$M = $(el).data("layoutMask", pane); // add data to relate mask to pane
-			el.className = "ui-layout-mask ui-layout-mask-"+ pane; // for user styling
+			el.className = "ui-layout-mask ui-layout-mask-"+ pane; // for operator styling
 			css = el.style;
 			// Both DIVs and IFRAMES
 			css.background	= "#FFF";
@@ -4100,7 +4100,7 @@ $.fn.layout = function (opts) {
 				thisTry.actual	= dimName=='width' ? $P.outerWidth() : $P.outerHeight();
 				thisTry.correct	= (size === thisTry.actual);
 
-				// log attempts and alert the user of this *non-fatal error* (if showDebugMessages)
+				// log attempts and alert the operator of this *non-fatal error* (if showDebugMessages)
 				if ( tries.length === 1) {
 					_log(msg, false, true);
 					_log(lastTry, false, true);
@@ -4143,7 +4143,7 @@ $.fn.layout = function (opts) {
 				makePaneFit( altPane, false, skipCallback );
 			}
 
-			// DEBUG - ALERT user/developer so they know there was a sizing problem
+			// DEBUG - ALERT operator/developer so they know there was a sizing problem
 			if (tries.length > 1)
 				_log(msg +'\nSee the Error Console for details.', true, true);
 		}
@@ -4330,7 +4330,7 @@ $.fn.layout = function (opts) {
 		}
 
 		// onresizeall_start will CANCEL resizing if returns false
-		// state.container has already been set, so user can access this info for calcuations
+		// state.container has already been set, so operator can access this info for calcuations
 		if (false === _runCallbacks("onresizeall_start")) return false;
 
 		var	// see if container is now 'smaller' than before
@@ -5097,7 +5097,7 @@ $.fn.layout = function (opts) {
 	,	slideToggle:		slideToggle		// method - ditto
 	//	pane actions
 	,	setSizeLimits:		setSizeLimits	// method - pass a 'pane' - update state min/max data
-	,	_sizePane:			sizePane		// method -intended for user by plugins only!
+	,	_sizePane:			sizePane		// method -intended for operator by plugins only!
 	,	sizePane:			manualSizePane	// method - pass a 'pane' AND an 'outer-size' in pixels or percent, or 'auto'
 	,	sizeContent:		sizeContent		// method - pass a 'pane'
 	,	swapPanes:			swapPanes		// method - pass TWO 'panes' - will swap them
@@ -6009,7 +6009,7 @@ $.layout.onReady.push( $.layout.browserZoom._init );
 if ($.effects) {
 
 	// add an option so initClosed and initHidden will work
-	$.layout.defaults.panes.useOffscreenClose = false; // user must enable when needed
+	$.layout.defaults.panes.useOffscreenClose = false; // operator must enable when needed
 	/* set the new animation as the default for all panes
 	$.layout.defaults.panes.fxName = "slideOffscreen";
 	*/

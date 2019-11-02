@@ -21,14 +21,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * @since 2019-05-28
  */
 @Controller
-@RequestMapping("/sysRole")
+@RequestMapping("/sys/role")
 public class SysRoleController {
 @Autowired
 private ISysRoleService SysRoleServiceImpl;
-private String prefix =  "sysRole";
+private String prefix =  "/sys/role";
 @RequestMapping(value="/index")
 public  String index(){
-        return prefix+"/sysRole";
+        return prefix+"/role";
         }
 @RequestMapping("/add")
 public String add()

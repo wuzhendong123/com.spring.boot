@@ -11,6 +11,6 @@ public class UserPasswordRetryLimitCountException extends UserException
 
     public UserPasswordRetryLimitCountException(int retryLimitCount)
     {
-        super("user.password.retry.limit.count", new Object[] { retryLimitCount });
+        super("operator.password.retry.limit.count", new Object[] { retryLimitCount });
     }
 }

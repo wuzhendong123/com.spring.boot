@@ -11,6 +11,6 @@ public class UserBlockedException extends UserException
 
     public UserBlockedException()
     {
-        super("user.blocked", null);
+        super("operator.blocked", null);
     }
 }

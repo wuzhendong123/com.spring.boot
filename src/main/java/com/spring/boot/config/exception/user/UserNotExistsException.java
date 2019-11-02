@@ -11,6 +11,6 @@ public class UserNotExistsException extends UserException
 
     public UserNotExistsException()
     {
-        super("user.not.exists", null);
+        super("operator.not.exists", null);
     }
 }

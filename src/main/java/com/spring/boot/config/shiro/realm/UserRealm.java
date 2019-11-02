@@ -50,7 +50,7 @@ public class UserRealm extends AuthorizingRealm {
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
 
         roles = sysRoleService.selectRoleKeys(user.getCode());
-        //  menus = menuService.selectPermsByUserId(user.getCode());
+        //  menus = menuService.selectPermsByUserId(operator.getCode());
         pems = sysPermissionsService.selectPermsByUserId(user.getCode());
         // 角色加入AuthorizationInfo认证对象
         info.setRoles(roles);

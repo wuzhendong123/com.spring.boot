@@ -11,7 +11,7 @@
                 <div class="select-list">
                     <ul>
                         <li>
-                            路由名称：<input type="text" name="name"/>
+                            角色名称：<input type="text" name="name"/>
                         </li>
 
                         <!--  <li>
@@ -45,7 +45,7 @@
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 </script>
 <script th:inline="javascript">
-    var prefix = ctx + "XXXX";
+    var prefix = ctx + "sys/role";
     var datas = [[${@dict.getType('sys_status_type')}]];
     var components = [[${@dict.getType('sys_component_type')}]];
     var tableM,tableOptions;

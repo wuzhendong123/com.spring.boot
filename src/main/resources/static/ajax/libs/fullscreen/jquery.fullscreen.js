@@ -130,7 +130,7 @@
 				fs.remove();
 			}
 
-			// Calling the facultative user supplied callback
+			// Calling the facultative operator supplied callback
 			if(options.callback) {
                             options.callback(fullScreen);
                         }

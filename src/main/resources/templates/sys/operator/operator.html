@@ -11,15 +11,25 @@
                 <div class="select-list">
                     <ul>
                         <li>
-                            路由名称：<input type="text" name="name"/>
+                            登录名称：<input type="text" name="name"/>
                         </li>
-
-                        <!--  <li>
-                              组件类型：<select name="type" th:with="type=${@dict.getType('sys_component_type')}">
-                              <option value="">所有</option>
-                              <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
-                          </select>
-                          </li>-->
+                        <li>
+                            手机号码：<input type="text" name="phone"/>
+                        </li>
+                        <li>
+                            用户状态：<select    name="status">
+                            <option value="">所有</option>
+                            <option th:each="dict : ${@dict.getType('sys_status_type')}"
+                                    th:value="${dict.dictValue}"
+                                    th:text="${dict.dictLabel}" >状态</option>
+                        </select>
+                        </li>
+                        <li class="select-time">
+                            <label>创建时间： </label>
+                            <input type="text" class="time-input" id="startTime" placeholder="开始时间" name="params[beginTime]"/>
+                            <span>-</span>
+                            <input type="text" class="time-input" id="endTime" placeholder="结束时间" name="params[endTime]"/>
+                        </li>
                         <li>
                             <!--<i class="fa fa-search"></i> <button class="layui-btn" lay-submit lay-filter="searchFrom">搜索</button>-->
                             <a class="btn btn-primary btn-rounded btn-sm" onclick="searchFrom(tableM)"><i class="fa fa-search"></i>&nbsp;搜索</a>

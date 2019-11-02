@@ -11,6 +11,6 @@ public class UserDeleteException extends UserException
 
     public UserDeleteException()
     {
-        super("user.password.delete", null);
+        super("operator.password.delete", null);
     }
 }

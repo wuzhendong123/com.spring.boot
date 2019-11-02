@@ -190,7 +190,7 @@ public class GeneratorServiceEntity {
     //@Test
     public void generateCode() {
         String packageName = "com.spring.boot";
-        boolean serviceNameStartWithI = false;//user -> UserService, 设置成true: user -> IUserService
+        boolean serviceNameStartWithI = false;//operator -> UserService, 设置成true: operator -> IUserService
         generateByTables(serviceNameStartWithI, packageName, "student");
     }
 

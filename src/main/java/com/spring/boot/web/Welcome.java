@@ -17,8 +17,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class Welcome {
-	@Autowired
-	private IStudentService studentService;
 	// @RequestMapping(value = "/index")
 	  public String index(Model model){  
 		 	model.addAttribute("name","Ryan");

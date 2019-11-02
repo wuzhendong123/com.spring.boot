@@ -1,7 +1,6 @@
 package com.spring.boot.web;
 
 import com.baomidou.mybatisplus.plugins.Page;
-import com.spring.boot.service.IStudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.CacheManager;
 import org.springframework.stereotype.Controller;

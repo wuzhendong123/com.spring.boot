@@ -14,7 +14,4 @@ import java.util.List;
 public interface FunctionRuleJudgeMapper {
     public List<String> test(@FunRouteParam("s")  String name, @FunRouteParam("code") @RouteParam("code")String code);
 
-    List<String> testStudent(@FunRouteParam("s") Student student, @FunRouteParam("code") @RouteParam("code")String code);
-
-    List<String> testStudent2(@FunRouteParam("s") Student student, @FunRouteParam("code") @RouteParam("code")String code);
 }

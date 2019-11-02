@@ -1,7 +1,7 @@
 
 $(function() {
     validateRule();
-    $(".i-checks").iCheck({checkboxClass:"icheckbox_square-green-login"});
+  //  $(".i-checks").iCheck({checkboxClass:"icheckbox_square-green-login"});
 	$('.imgcode').click(function() {
 		var url = ctx + "captcha/captchaImage?type=" + captchaType + "&s=" + Math.random();
 		$(".imgcode").attr("src", url);
@@ -22,7 +22,7 @@ function login() {
     var rememberMe = $("input[name='rememberme']").is(':checked');
     $.ajax({
         type: "post",
-        url: ctx + "tologin",
+        url: ctx + "doLogin",
         data: {
             "username": username,
             "password": password,

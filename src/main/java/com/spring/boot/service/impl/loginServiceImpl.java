@@ -1,5 +1,6 @@
 package com.spring.boot.service.impl;
 
+import com.spring.boot.config.exception.user.UserNotExistsException;
 import com.spring.boot.entity.Operator;
 import com.spring.boot.service.IOperatorService;
 import com.spring.boot.service.LoginService;
@@ -21,7 +22,12 @@ public class loginServiceImpl implements LoginService {
     private IOperatorService operatorService;
     @Override
     public Operator login(String username, String password) {
-        return operatorService.findByNameByPass(username,encryptPassword(password));
+        Operator operator= operatorService.findByNameByPass(username,encryptPassword(password));
+        if(operator==null){
+         throw new UserNotExistsException();
+        }
+        return operator;
+
     }
     public String encryptPassword(String username, String password, String salt)
     {

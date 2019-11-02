@@ -2,7 +2,6 @@ package com.spring.boot.mapper;
 
 import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.mybatisplus.plugins.pagination.Pagination;
-import com.spring.boot.entity.Student;
 import com.baomidou.mybatisplus.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.cache.annotation.Cacheable;

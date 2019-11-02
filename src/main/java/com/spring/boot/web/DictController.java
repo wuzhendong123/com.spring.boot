@@ -1,12 +1,8 @@
 package com.spring.boot.web;
 
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
-import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.spring.boot.entity.DictType;
-import com.spring.boot.entity.Student;
 import com.spring.boot.query.DictTypeQuery;
-import com.spring.boot.query.MenuQuery;
 import com.spring.boot.service.IDictTypeService;
 import com.spring.boot.util.BeanUtil;
 import com.spring.boot.web.base.BaseController;
@@ -18,8 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-
-import java.util.List;
 
 /**
  * @program: com.spring.boot

@@ -1,9 +1,7 @@
 package com.spring.boot.service;
 
 import com.baomidou.mybatisplus.plugins.Page;
-import com.spring.boot.entity.Student;
 import com.baomidou.mybatisplus.service.IService;
-import org.springframework.cache.annotation.Cacheable;
 
 /**
  * <p>

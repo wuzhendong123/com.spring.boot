@@ -2,7 +2,6 @@ package com.spring.boot.function;
 
 import com.spring.boot.config.fun.spring.registrar.annotaion.FunRouteParam;
 import com.spring.boot.config.fun.spring.registrar.annotaion.RouteParam;
-import com.spring.boot.entity.Student;
 
 import java.util.List;
 

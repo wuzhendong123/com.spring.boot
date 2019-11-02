@@ -2,10 +2,8 @@ package com.spring.boot.service.impl;
 
 import com.baomidou.mybatisplus.plugins.Page;
 import com.spring.boot.mapper.StudentMapper;
-import com.spring.boot.entity.Student;
 import com.spring.boot.service.IStudentService;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

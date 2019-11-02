@@ -1,8 +1,6 @@
 package com.spring.boot.web;
 
 import com.baomidou.mybatisplus.plugins.Page;
-import com.spring.boot.config.mq.MqProperties;
-import com.spring.boot.entity.Student;
 import com.spring.boot.service.IStudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.CacheManager;

@@ -5,26 +5,29 @@ import javax.servlet.http.HttpSession;
 
 import com.spring.boot.entity.Operator;
 import com.spring.boot.util.ServletUtils;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class LoginController {
-	@RequestMapping("/toLogin")	
-	public String toLogin() {
-		return "login/login";
-	}
-/*	@RequestMapping("/login")
-	public String login(@RequestParam("name") String name,@RequestParam("passWord")String passWord,HttpServletRequest httpRequest) {
-		HttpSession session=httpRequest.getSession();
-		Operator operator=new Operator();
-		operator.setName(name);
-		session.setAttribute("auth", operator);
-		return "redirect:index";
-	}*/
-
 	@RequestMapping("/login")
+	public String toLogin() {
+		return "login";
+	}
+	@RequestMapping("/tologin")
+	public String login(@RequestParam("name") String name,@RequestParam("passWord")String passWord,HttpServletRequest httpRequest) {
+
+		UsernamePasswordToken token = new UsernamePasswordToken(name, passWord);
+		Subject subject = SecurityUtils.getSubject();
+		subject.login(token);
+		return "redirect:index";
+	}
+
+	/*@RequestMapping("/login")
 	public String login(HttpServletRequest httpRequest) {
 		// 如果是Ajax请求，返回Json字符串。
 		if (ServletUtils.isAjaxRequest(httpRequest))
@@ -33,7 +36,7 @@ public class LoginController {
 		}
 
 		return "login";
-	}
+	}*/
 
 
 }

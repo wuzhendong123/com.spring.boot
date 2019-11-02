@@ -75,7 +75,8 @@
             }
             ,cols: [[ //表头
                 {type: 'checkbox', fixed: 'left'}
-                ,{field: 'name', title: '模板名称',  sort: true, fixed: 'left'}
+                ,{field: 'name', title: '角色名称',  sort: true, fixed: 'left'}
+                ,{field: 'roleKey', title: '角色key',  sort: true, fixed: 'left'}
                 ,{field: 'type', title: '组件类型',templet:function (obj) {
                         return $.table.selectDictLabel(components, obj.type);
                     }}
@@ -83,7 +84,6 @@
                 ,{field: 'status', title: '状态', sort: true,templet:function (obj) {
                         return $.table.selectDictLabel(datas, obj.status);
                     }}
-                ,{field: 'exampleHtml', title: 'exampleHtml内容'}
                 ,{fixed: 'right', title: '操作', align:'center', toolbar: '#templeTool'}
 
             ]]

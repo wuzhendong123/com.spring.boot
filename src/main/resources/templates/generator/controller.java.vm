@@ -3,7 +3,7 @@ package ${package.Controller};
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import com.baomidou.mybatisplus.plugins.Page;
-
+import org.springframework.web.bind.annotation.PathVariable;
 #if(${restControllerStyle})
 import org.springframework.web.bind.annotation.RestController;
 #else
@@ -30,22 +30,41 @@ import ${superControllerClassPackage};
 public class ${table.controllerName} {
 @Autowired
 private ${table.serviceName} ${table.serviceImplName};
-private String prefix =  "${table.entityPath}";
-@RequestMapping(value="/index")
+private String prefix="${table.entityPath}";
+@RequestMapping(value = "/index")
 public  String index(){
         return prefix+"/${table.entityPath}";
         }
 @RequestMapping("/add")
 public String add()
         {
-        return prefix + "/add";
+        return prefix+"/add";
         }
-@RequestMapping(value="/list")
+@RequestMapping(value = "/list")
 @ResponseBody
-public R list(@RequestParam("page") int page, @RequestParam("limit") int limit, ${entity} obj){
+public R list(@RequestParam("page") int page,@RequestParam("limit") int limit, ${entity} obj){
         Page<${entity} > pagePg=new Page<>(page,limit);
         pagePg= ${table.serviceImplName}.selectPageBy${entity}(pagePg,obj);
         R r=R.okList(pagePg);
         return r;
         }
-}
+
+@RequestMapping("/edit/{code}")
+public ModelAndView edit(@PathVariable("code") String code){
+        ModelAndView mav=new ModelAndView(prefix+"/edit");
+    ${entity} entity=  ${table.serviceImplName}.selectById(code);
+        mav.addObject("entity",entity);
+        return mav;
+        }
+
+@RequestMapping(value = "/doEdit")
+@ResponseBody
+public R doEdit(${entity} entity){
+    ${entity} entityDB=${table.serviceImplName}.selectById(entity.getCode());
+        BeanUtil.copyPropertiesIgnoreNull(entity,entityDB);
+    ${table.serviceImplName}.updateById(entityDB);
+        R r = R.ok();
+        return r;
+
+        }
+        }

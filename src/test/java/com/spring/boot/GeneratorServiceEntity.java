@@ -68,9 +68,9 @@ public class GeneratorServiceEntity {
             }
         });
         dsc.setDriverName("com.mysql.jdbc.Driver");
-        dsc.setUsername("wuzhendong");
-        dsc.setPassword("wuzhendong");
-        dsc.setUrl("jdbc:mysql://192.168.16.160:3306/test?useUnicode=true&characterEncoding=utf8&autoReconnect=true&failOverReadOnly=false");
+        dsc.setUsername("root");
+        dsc.setPassword("123456");
+        dsc.setUrl("jdbc:mysql://95.169.29.88:3306/boot?useUnicode=true&characterEncoding=utf8&autoReconnect=true&failOverReadOnly=false");
         mpg.setDataSource(dsc);
 
         // 策略配置 实体设置
@@ -82,7 +82,7 @@ public class GeneratorServiceEntity {
         strategy.setNaming(NamingStrategy.underline_to_camel);
         // 需要生成的表
         strategy.setInclude(
-                new String[] { "sys_role_permissions_ref"});
+                new String[] { "sys_permissions"});
         strategy.setSuperEntityClass("com.spring.boot.entity.base.BaseEntity");
         strategy.setSuperEntityColumns(new String[] { "code", "create_time","optimistic","update_time" }); //写的是数据库字段名
 

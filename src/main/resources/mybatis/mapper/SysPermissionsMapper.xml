@@ -37,11 +37,4 @@
             
         </where>
     </select>
-    <select id="selectPermsByUserId" resultType="java.lang.String">
-        select distinct s.permissions_mark from sys_permissions s
-          inner join sys_role_permissions_ref r_r on r_r.per_code=s.code
-          inner join sys_operator_role_ref orr on orr.role_code=r_r.rule_code
-          where 1=1
-          and orr.oper_code=#{userCode}
-    </select>
 </mapper>

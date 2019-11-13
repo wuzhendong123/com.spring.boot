@@ -334,7 +334,7 @@
             	});
             },
             // 弹出层指定参数选项
-            openOptions: function (options) {
+             openOptions: function (options) {
             	var _url = $.common.isEmpty(options.url) ? "/404.html" : options.url; 
             	var _title = $.common.isEmpty(options.title) ? "系统窗口" : options.title; 
                 var _width = $.common.isEmpty(options.width) ? "800" : options.width; 

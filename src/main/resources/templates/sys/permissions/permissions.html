@@ -11,7 +11,10 @@
                 <div class="select-list">
                     <ul>
                         <li>
-                            角色名称：<input type="text" name="name"/>
+                            权限名称：<input type="text" name="name"/>
+                        </li>
+                        <li>
+                            权限标记：<input type="text" name="permissionsMark"/>
                         </li>
 
                         <!--  <li>
@@ -32,8 +35,6 @@
         <div class="col-sm-12 select-table table-striped">
             <table class="layui-hide" id="data_table" lay-filter="data_table"></table>
         </div>
-
-
     </div>
 
 
@@ -42,11 +43,12 @@
 
 <div th:include="include :: footer"></div>
 <script type="text/html" id="templeTool">
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="list">列表</a>
     <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-    <a class="layui-btn layui-btn-xs" lay-event="addRolePermissions">添加权限</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 </script>
 <script th:inline="javascript">
-    var prefix = ctx + "sys/role";
+    var prefix = ctx + "sys/permissions";
     var datas = [[${@dict.getType('sys_status_type')}]];
     var components = [[${@dict.getType('sys_component_type')}]];
     var tableM,tableOptions;
@@ -58,7 +60,7 @@
         ;
         tableOptions={
             elem: '#data_table'
-            ,height: 512
+            ,height: 420
             ,title:"组件数据"
             ,url: prefix+'/list' //数据接口
             ,updateUrl:prefix+'/edit/{id}'
@@ -76,12 +78,13 @@
             }
             ,cols: [[ //表头
                 {type: 'checkbox', fixed: 'left'}
-                ,{field: 'name', title: '角色名称'}
-                ,{field: 'roleKey', title: '角色key',  sort: true}
+                ,{field: 'name', title: '权限名称'}
+
                 ,{field: 'createTime', title: '创建时间', sort: true}
                 ,{field: 'status', title: '状态', sort: true,templet:function (obj) {
                         return $.table.selectDictLabel(datas, obj.status);
                     }}
+                ,{field: 'permissionsMark', title: '权限标记',  sort: true}
                 ,{fixed: 'right', title: '操作', align:'center', toolbar: '#templeTool'}
 
             ]]

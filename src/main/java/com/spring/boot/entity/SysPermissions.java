@@ -1,7 +1,6 @@
 package com.spring.boot.entity;
 
 import com.baomidou.mybatisplus.annotations.TableField;
-import com.baomidou.mybatisplus.activerecord.Model;
 import com.baomidou.mybatisplus.annotations.TableName;
 import com.spring.boot.entity.base.BaseEntity;
 
@@ -11,7 +10,7 @@ import com.spring.boot.entity.base.BaseEntity;
  * </p>
  *
  * @author zhendong.wu
- * @since 2019-05-28
+ * @since 2019-11-05
  */
 @TableName("sys_permissions")
 public class SysPermissions extends BaseEntity<SysPermissions> {

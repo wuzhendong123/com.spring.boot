@@ -1,10 +1,7 @@
 package com.spring.boot;
 
 
-import com.spring.boot.enums.OrderEventEnum;
-import com.spring.boot.enums.OrderStatusEnum;
-import org.apache.ibatis.mapping.MappedStatement;
-import org.apache.tomcat.util.res.StringManager;
+import io.shardingsphere.jdbc.spring.boot.SpringBootConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
@@ -37,7 +34,7 @@ import java.util.Date;
 
 
 @RestController
-@SpringBootApplication
+@SpringBootApplication(exclude =SpringBootConfiguration.class )
 //@EnableAdminServer
 //@ImportResource({"classpath:urule-console-context.xml"})
 public class Application  {

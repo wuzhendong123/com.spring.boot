@@ -1,6 +1,7 @@
 package com.spring.boot.web.base;
 
 import com.baomidou.mybatisplus.plugins.Page;
+import com.spring.boot.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -68,6 +69,13 @@ public class BaseController<T,E> {
             }
 
             return result;
+    }
+    /**
+     * 页面跳转
+     */
+    public String redirect(String url)
+    {
+        return StringUtils.format("redirect:{}", url);
     }
 
 }

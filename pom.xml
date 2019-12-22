@@ -274,6 +274,14 @@
       </dependency>
 
 
+      <!--  spring 权限验证-->
+<!--      <dependency>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-starter-security</artifactId>
+          <version>${project.build.springVersion}</version>
+      </dependency>-->
+
+
       <!-- swagger2-->
       <dependency>
           <groupId>io.springfox</groupId>
@@ -317,6 +325,7 @@
           <version>2.37.1</version>
       </dependency>-->
 
+      <!-- 分表 分库-->
       <dependency>
           <groupId>io.shardingsphere</groupId>
           <artifactId>sharding-jdbc-spring-boot-starter</artifactId>

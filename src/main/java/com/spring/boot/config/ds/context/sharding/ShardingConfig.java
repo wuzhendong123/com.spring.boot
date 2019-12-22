@@ -24,8 +24,8 @@ import java.util.*;
 //@Configuration
 public class ShardingConfig {
 
-    @Bean("shardDataSource")
-    @Primary
+  //  @Bean("shardDataSource")
+ //   @Primary
     public DataSource  shardDataSource(@Qualifier("dataSource") DataSource dataSource){
         Map<String, DataSource> dataSourceMap=new HashMap<>();
         dataSourceMap.put("dataSource",dataSource);
@@ -47,8 +47,8 @@ public class ShardingConfig {
         TableRuleConfiguration tableRuleConfiguration=new TableRuleConfiguration();
         tableRuleConfiguration.setLogicTable("order");
         tableRuleConfiguration.setKeyGeneratorColumnName("order_no");
-        ShardingStrategyConfiguration databaseShardingStrategyConfig=new ComplexShardingStrategyConfiguration("user_key",new ComplexResidualShardingAlgorithm());
-        tableRuleConfiguration.setDatabaseShardingStrategyConfig(databaseShardingStrategyConfig);
+       // ShardingStrategyConfiguration databaseShardingStrategyConfig=new ComplexShardingStrategyConfiguration("user_key",new ComplexResidualShardingAlgorithm());
+      //  tableRuleConfiguration.setDatabaseShardingStrategyConfig(databaseShardingStrategyConfig);
         ShardingStrategyConfiguration tableShardingStrategyConfig=new ComplexShardingStrategyConfiguration("user_key",new ComplexResidualShardingAlgorithm());
         tableRuleConfiguration.setTableShardingStrategyConfig(tableShardingStrategyConfig);
 

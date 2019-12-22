@@ -115,6 +115,9 @@ public class ShiroConfig
         // 不需要拦截的访问
         filterChainDefinitionMap.put("/login", "anon");//captchaValidate
         filterChainDefinitionMap.put("/doLogin", "anon");//captchaValidate
+
+        filterChainDefinitionMap.put("/wx/**", "anon");//captchaValidate
+        filterChainDefinitionMap.put("/test/**", "anon");//captchaValidate
         // 系统权限列表
         // filterChainDefinitionMap.putAll(SpringUtils.getBean(IMenuService.class).selectPermsAll());
 

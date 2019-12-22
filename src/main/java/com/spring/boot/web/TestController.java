@@ -28,7 +28,7 @@ import java.io.IOException;
 import java.util.Collection;
 
 @Controller
-@Validated
+//@Validated
 @RequestMapping("/test")
 public class TestController implements InitializingBean {
 @Autowired

@@ -58,8 +58,8 @@
         ;
         tableOptions={
             elem: '#data_table'
-            ,height: 512
-            ,title:"组件数据"
+            ,height: 712
+            ,title:"角色数据"
             ,url: prefix+'/list' //数据接口
             ,updateUrl:prefix+'/edit/{id}'
             ,addUrl:prefix+'/add'
@@ -136,11 +136,6 @@
 
 
     });
-    /*字典列表-详细*/
-    function detail(dictId) {
-        var url = prefix + '/data/' + dictId;
-        createMenuItem(url, "字典数据");
-    }
 
 
 </script>

@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.plugins.pagination.Pagination;
 import com.baomidou.mybatisplus.service.IService;
 import com.spring.boot.common.domain.Ztree;
 import com.spring.boot.entity.Menu;
+import com.spring.boot.entity.Operator;
 
 import java.util.List;
 import java.util.Map;
@@ -21,6 +22,7 @@ import java.util.Set;
 public interface IMenuService extends IService<Menu> {
     public Page<Menu> findByPath(Page page, String path);
     public List<Menu> findAll();
+    public List<Menu> findByUsrer(Operator operator);
 
     public  Menu findRootMenu();
 

@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.plugins.pagination.Pagination;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.spring.boot.common.domain.Ztree;
 import com.spring.boot.entity.Menu;
+import com.spring.boot.entity.Operator;
 import com.spring.boot.mapper.MenuMapper;
 import com.spring.boot.service.IMenuService;
 import com.spring.boot.service.IOperatorService;
@@ -35,6 +36,11 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
     @Override
     public List<Menu> findAll() {
         return baseMapper.findAll();
+    }
+
+    @Override
+    public List<Menu> findByUsrer(Operator operator) {
+        return null;
     }
 
     @Override

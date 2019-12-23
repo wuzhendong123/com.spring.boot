@@ -33,7 +33,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 
 	@Override
 	public void addViewControllers(ViewControllerRegistry registry) {
-		registry.addViewController("/error").setViewName("error.html");
+		registry.addViewController("/error").setViewName("error/error.html");
 		registry.addViewController("/").setViewName("index.html");
 		registry.setOrder(Ordered.HIGHEST_PRECEDENCE);
 	}
